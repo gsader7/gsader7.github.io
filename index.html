@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ghady Sader Portfolio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2712%27 fill=%27%2310141C%27/%3E%3Ctext x=%2732%27 y=%2743%27 font-family=%27Arial Black,Arial%27 font-weight=%27900%27 font-size=%2728%27 fill=%27%23fff%27 text-anchor=%27middle%27%3EGS%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Ghady Sader, mechanical engineering student at UC Berkeley and the American University of Beirut. Machines designed, simulated and built.">
+<link rel="preload" href="fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Archivo";src:url("fonts/archivo.woff2") format("woff2");font-weight:100 900;font-stretch:62% 125%;font-style:normal;font-display:swap}
+/* Layout idea: a white engineering sheet. CAD renders sit on it without frames, one typeface
+   speaks in three widths (expanded = titles, normal = reading, condensed = drawing notes),
+   and the only loud moment is the name riding a loaded beam. Left-aligned throughout. */
+:root{
+  --paper:#FFFFFF;
+  --mist:#F0F2F5;
+  --ink:#10141C;
+  --steel:#5C6572;
+  --line:#D4D9E0;
+  --cobalt:#1638D8;
+  --hot:#E5391B;
+  --display:"Archivo","Arial Black","Helvetica Neue",Arial,sans-serif;
+  --body:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --gut:clamp(18px,4.2vw,64px);
+  --max:1360px;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-stretch:100%;font-size:clamp(16px,1.05vw + 12px,18px);line-height:1.58;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+a{color:inherit}
+p{margin:0}
+h1,h2,h3,h4{margin:0;font-family:var(--display);font-stretch:125%;font-weight:750;letter-spacing:-.02em;line-height:1.04;text-wrap:balance}
+:focus-visible{outline:2px solid var(--cobalt);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+.note{font-stretch:88%;font-weight:500;color:var(--steel);font-size:.9rem;letter-spacing:.005em;line-height:1.42}
+.num{font-variant-numeric:tabular-nums}
+[hidden]{display:none!important}
+
+/* header */
+.top{position:fixed;inset:0 0 auto 0;z-index:50;transition:transform .35s ease,background-color .3s,border-color .3s;border-bottom:1px solid transparent}
+.top.scrolled{background:rgba(255,255,255,.86);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom-color:var(--line)}
+.top.away{transform:translateY(-100%)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.brand{font-family:var(--display);font-stretch:125%;font-weight:800;letter-spacing:-.01em;text-decoration:none;font-size:1rem}
+.nav{display:flex;gap:clamp(14px,2.4vw,34px)}
+.nav a{text-decoration:none;font-weight:560;font-size:.94rem;padding:6px 0;background:linear-gradient(var(--ink),var(--ink)) left bottom/0 1.5px no-repeat;transition:background-size .3s}
+.nav a:hover,.nav a[aria-current="true"]{background-size:100% 1.5px}
+@media (max-width:560px){.nav a.opt{display:none}}
+
+/* hero */
+.hero{padding-top:clamp(92px,11vh,132px);padding-bottom:clamp(36px,6vh,72px);touch-action:pan-y}
+.hero-lead{font-weight:560;font-size:clamp(.95rem,1.2vw,1.1rem);margin-bottom:clamp(18px,3vh,36px)}
+.rig{position:relative;user-select:none;-webkit-user-select:none;cursor:crosshair}
+.name{font-size:clamp(2.2rem,11vw,10rem);font-weight:840;line-height:.86;letter-spacing:-.035em;white-space:nowrap;display:flex;justify-content:space-between;width:100%;margin:0;padding-bottom:.02em}
+.name span{display:inline-block;transform-origin:50% 100%;will-change:transform}
+.name .gap{width:.34em}
+.beam{display:block;width:100%;height:clamp(92px,9vw,124px);overflow:visible;margin-top:-2px}
+.hero-foot{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,5vw,80px);align-items:end;margin-top:clamp(10px,2vh,28px)}
+.me{display:flex;gap:clamp(16px,2vw,28px);align-items:flex-end}
+.me img{width:clamp(84px,8.5vw,120px);height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 18%;border-radius:6px;flex:none}
+.hero-say{font-size:clamp(1.05rem,1.45vw,1.3rem);line-height:1.4;font-weight:480;max-width:34ch;letter-spacing:-.01em}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 22px;border-radius:999px;border:1.5px solid var(--ink);font-weight:620;font-size:.96rem;text-decoration:none;background:var(--ink);color:var(--paper);cursor:pointer;font-family:inherit;transition:background-color .2s,color .2s,border-color .2s}
+.btn:hover{background:var(--cobalt);border-color:var(--cobalt)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.readout{border-top:1.5px solid var(--ink);font-variant-numeric:tabular-nums}
+.readout div{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}
+.readout dt{font-stretch:88%;font-weight:520;color:var(--steel);font-size:.9rem}
+.readout dd{margin:0;font-weight:680;font-stretch:112%}
+.readout + .note{margin-top:10px}
+dl{margin:0}
+@media (max-width:760px){.hero-foot{grid-template-columns:1fr}}
+
+/* section heads */
+.sec{padding-block:clamp(56px,9vw,128px)}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;border-top:1.5px solid var(--ink);padding-top:16px;margin-bottom:clamp(36px,6vw,84px)}
+.sec-head h2{font-size:clamp(1.5rem,3vw,2.5rem)}
+
+/* work plates */
+.plates{display:flex;flex-direction:column;gap:clamp(64px,11vw,168px)}
+.plate{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(20px,3.6vw,56px);align-items:center}
+.plate-media{grid-column:1 / span 7;position:relative;display:block;aspect-ratio:4/3;background:var(--mist);border-radius:6px;overflow:hidden;text-decoration:none}
+.plate:nth-child(even) .plate-media{grid-column:6 / span 7;order:2}
+.plate-text{grid-column:span 5}
+.plate-media img.fit{position:absolute;inset:5%;width:90%;height:90%;object-fit:contain;mix-blend-mode:multiply}
+.plate-media img.fill,.plate-media video.fill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.plate-media .inset{position:absolute;right:4%;bottom:5%;width:23%;aspect-ratio:9/16;object-fit:cover;border-radius:5px;box-shadow:0 18px 40px -12px rgba(16,20,28,.55);border:2px solid var(--paper)}
+.plate-media.duo{display:grid;grid-template-columns:.62fr 1fr;gap:0}
+.plate-media.duo video{width:100%;height:100%;object-fit:cover}
+.plate-media.duo img{width:100%;height:100%;object-fit:cover}
+.plate-media::after{content:"Open case study";position:absolute;left:16px;bottom:14px;padding:7px 14px;border-radius:999px;background:var(--ink);color:var(--paper);font-size:.82rem;font-weight:600;transition:background-color .25s,padding .25s}
+.plate-media:hover::after,.plate-media:focus-visible::after{background:var(--cobalt);padding-inline:20px}
+.plate-media{transition:box-shadow .35s,translate .35s cubic-bezier(.2,.7,.2,1)}
+.plate-media:hover{translate:0 -4px;box-shadow:0 26px 50px -30px rgba(16,20,28,.45)}
+.tag{display:inline-flex;align-items:center;gap:8px;font-weight:650;font-size:.84rem;padding:5px 12px;border-radius:999px;background:var(--cobalt);color:#fff;margin-bottom:18px}
+.tag.open{background:transparent;color:var(--ink);border:1.5px dashed var(--steel)}
+.plate h3{font-size:clamp(1.7rem,3.3vw,3.1rem);margin-bottom:16px}
+.plate h3 a{text-decoration:none}
+.plate-text > p{color:#2A303B;max-width:44ch}
+.figs{display:flex;flex-wrap:wrap;gap:16px clamp(18px,2.4vw,34px);margin-top:26px;border-top:1px solid var(--line);padding-top:16px}
+.figs dt{font-stretch:88%;font-weight:520;color:var(--steel);font-size:.84rem;line-height:1.3;order:2;margin-top:4px}
+.figs div{display:flex;flex-direction:column;max-width:17ch}
+.figs dd{margin:0;font-family:var(--display);font-stretch:118%;font-weight:760;font-size:clamp(1.05rem,1.5vw,1.35rem);letter-spacing:-.015em;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.more{display:inline-block;margin-top:24px;font-weight:650;text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:2px;transition:color .2s,border-color .2s}
+.more:hover{color:var(--cobalt);border-color:var(--cobalt)}
+@media (max-width:900px){
+  .plate{grid-template-columns:1fr}
+  .plate-media,.plate:nth-child(even) .plate-media{grid-column:1;order:0}
+  .plate-text{grid-column:1}
+}
+@media (prefers-reduced-motion:no-preference){
+  @supports (animation-timeline:view()){
+    .plate-media > img,.plate-media > video.fill{animation:settle linear both;animation-timeline:view();animation-range:entry 0% cover 42%}
+    .plate-text{animation:rise linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
+    @keyframes settle{from{scale:1.14}to{scale:1}}
+    @keyframes rise{from{translate:0 34px}to{translate:0 0}}
+  }
+}
+
+/* experience */
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,4fr) minmax(0,5fr);gap:clamp(14px,3vw,48px);padding-block:clamp(22px,3vw,38px);border-bottom:1px solid var(--line)}
+.row:first-child{padding-top:0}
+.row h3{font-size:clamp(1.15rem,1.7vw,1.5rem);font-stretch:112%;font-weight:720;line-height:1.15}
+.row .role{margin-top:6px;font-weight:540}
+.row ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;color:#2A303B}
+.row li{padding-left:18px;position:relative}
+.row li::before{content:"";position:absolute;left:0;top:.72em;width:9px;height:1.5px;background:var(--cobalt)}
+@media (max-width:820px){.row{grid-template-columns:1fr;gap:10px}}
+.lead-say{font-family:var(--display);font-stretch:118%;font-weight:720;font-size:clamp(1.5rem,3.6vw,3.3rem);line-height:1.08;letter-spacing:-.02em;max-width:22ch;margin-bottom:clamp(28px,4vw,56px);text-wrap:balance}
+.lead-say b{font-weight:inherit;color:var(--cobalt)}
+
+/* honor society photos */
+.hs{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:clamp(10px,1.6vw,20px);margin-bottom:clamp(32px,5vw,64px);align-items:start}
+.hs .shot img{aspect-ratio:4/3}
+.hs .big .shot img{aspect-ratio:3/2}
+@media (max-width:900px){.hs{grid-template-columns:1fr 1fr 1fr}.hs .big{grid-column:1 / -1}}
+@media (max-width:520px){.hs{grid-template-columns:1fr}}
+
+
+.hero-lead{display:flex;justify-content:space-between;gap:8px 28px;flex-wrap:wrap}
+.hero-lead a{color:var(--cobalt);text-decoration:none;display:inline-flex;align-items:center;gap:9px}
+.hero-lead a::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--cobalt)}
+.hero-lead a:hover{text-decoration:underline;text-underline-offset:4px}
+.proof{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0}
+.proof div{padding:14px 18px 4px 0}
+.proof div + div{padding-left:18px;border-left:1px solid var(--line)}
+.proof dt{font-weight:680;line-height:1.25}
+.proof dt a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px}
+.proof dt a:hover{color:var(--cobalt);text-decoration-color:currentColor}
+.proof dd{margin:3px 0 0;font-size:.9rem;line-height:1.35;color:var(--steel);font-weight:520}
+@media (max-width:900px){.proof{grid-template-columns:repeat(2,minmax(0,1fr))}.proof div:nth-child(3){padding-left:0;border-left:0}.proof div:nth-child(n+3){border-top:1px solid var(--line)}}
+@media (max-width:520px){.proof{grid-template-columns:1fr}.proof div + div{padding-left:0;border-left:0;border-top:1px solid var(--line)}}
+.strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(10px,1.4vw,18px);padding-block:clamp(22px,3vw,38px);border-bottom:1px solid var(--line)}
+.strip figure,.mini{margin:0}
+.strip figcaption,.mini figcaption{margin-top:8px}
+@media (max-width:900px){.strip{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:18px}.strip figure{flex:0 0 min(58vw,260px);scroll-snap-align:start}}
+.mini{margin-top:18px;max-width:210px}
+.row:has(+ .strip){border-bottom:0;padding-bottom:0}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(24px,5vw,88px);align-items:start}
+.portrait{aspect-ratio:4/5;object-fit:cover;object-position:50% 18%;width:100%;border-radius:6px;background:var(--mist)}
+.about-text > p{font-size:clamp(1.1rem,1.55vw,1.4rem);line-height:1.42;max-width:38ch;letter-spacing:-.005em}
+.about-text > p + p{margin-top:1em}
+.facts{margin-top:clamp(28px,4vw,52px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(20px,3vw,44px)}
+.facts div{border-top:1px solid var(--line);padding:14px 0 18px}
+.facts dt{font-stretch:88%;font-weight:520;color:var(--steel);font-size:.86rem;margin-bottom:4px}
+.facts dd{margin:0;font-weight:540;line-height:1.4}
+@media (max-width:820px){.about{grid-template-columns:1fr}.portrait{max-width:340px}.facts{grid-template-columns:1fr}}
+
+/* contact */
+.contact{background:var(--ink);color:var(--paper);padding-block:clamp(64px,10vw,140px)}
+.contact h2{font-size:clamp(1.9rem,5.4vw,5rem);max-width:15ch}
+.mail{display:inline-block;margin-top:clamp(24px,4vw,48px);font-family:var(--display);font-stretch:112%;font-weight:700;font-size:clamp(1.25rem,3.6vw,3.2rem);letter-spacing:-.02em;text-decoration:none;border-bottom:2px solid #5A6475;padding-bottom:4px;transition:border-color .25s;overflow-wrap:anywhere}
+.mail:hover{border-color:var(--paper)}
+.contact .cta{margin-top:28px}
+.contact .btn{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.contact .btn:hover{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.contact .btn.ghost{background:transparent;color:var(--paper);border-color:#5A6475}
+.contact .btn.ghost:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:clamp(48px,8vw,110px);padding-top:18px;border-top:1px solid #343B49;color:#A9B1BE;font-size:.86rem}
+
+
+/* podium strip in the hero */
+.podium{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:clamp(22px,3.5vh,40px);border-top:1.5px solid var(--ink)}
+.podium a{display:flex;flex-direction:column;gap:4px;padding:16px 18px 18px 0;text-decoration:none;border-bottom:1px solid var(--line);position:relative;transition:background-color .25s,padding-left .25s}
+.podium a + a{padding-left:18px;border-left:1px solid var(--line)}
+.podium a:hover{background:var(--mist);padding-left:18px}
+.podium b{font-family:var(--display);font-stretch:125%;font-weight:820;font-size:clamp(1.2rem,1.9vw,1.8rem);letter-spacing:-.025em;line-height:1.05;color:var(--cobalt);white-space:nowrap}
+.podium span{font-weight:600;line-height:1.3}
+.podium em{font-style:normal;font-stretch:88%;font-weight:560;font-size:.86rem;color:var(--steel);margin-top:4px;display:inline-flex;align-items:center;gap:8px}
+.podium em::after{content:"";width:18px;height:1.5px;background:currentColor;transition:width .25s}
+.podium a:hover em{color:var(--cobalt)}
+.podium a:hover em::after{width:32px}
+@media (max-width:760px){.podium{grid-template-columns:1fr}.podium a + a{padding-left:0;border-left:0}}
+.try{display:inline-flex;align-items:center;gap:10px;font-weight:620;font-size:.9rem;margin-bottom:12px}
+.try i{width:9px;height:9px;border-radius:50%;background:var(--cobalt);box-shadow:0 0 0 0 rgba(22,56,216,.5);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 10px rgba(22,56,216,0)}100%{box-shadow:0 0 0 0 rgba(22,56,216,0)}}
+/* project quick links */
+.jump,.casebar{display:flex;flex-wrap:wrap;gap:8px}
+.jump{margin:calc(-1*clamp(16px,3vw,44px)) 0 clamp(36px,6vw,80px)}
+.jump a,.casebar a{display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 15px;border-radius:999px;border:1.5px solid var(--line);text-decoration:none;font-weight:600;font-size:.9rem;transition:border-color .2s,background-color .2s,color .2s}
+.jump a:hover,.casebar a:hover{border-color:var(--ink)}
+.jump a small,.casebar a small{font-size:.8rem;font-weight:700;color:var(--cobalt)}
+.casebar{margin-bottom:clamp(24px,4vw,48px)}
+.casebar a[aria-current="page"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.casebar a[aria-current="page"] small{color:#AFC0FF}
+/* rank line above titles */
+.rank{margin-bottom:14px}
+.rank b{display:block;font-family:var(--display);font-stretch:125%;font-weight:820;font-size:clamp(1.5rem,2.5vw,2.3rem);letter-spacing:-.025em;line-height:1;color:var(--cobalt)}
+.rank span{display:block;margin-top:6px;font-weight:580;font-size:.95rem;line-height:1.35;max-width:36ch}
+.case .rank b{font-size:clamp(1.6rem,3vw,2.8rem)}
+.medal{position:absolute;left:14px;top:14px;z-index:2;padding:8px 16px;border-radius:999px;background:var(--cobalt);color:#fff;font-family:var(--display);font-stretch:118%;font-weight:760;font-size:.95rem;letter-spacing:-.005em;box-shadow:0 8px 22px -8px rgba(22,56,216,.7)}
+.medal.open{background:var(--paper);color:var(--ink);border:1.5px dashed var(--steel);box-shadow:none;font-weight:680}
+.shot{position:relative}
+.shot::after{content:"+";position:absolute;right:10px;top:10px;width:30px;height:30px;border-radius:50%;background:var(--paper);color:var(--ink);font-weight:500;font-size:1.25rem;line-height:28px;text-align:center;border:1.5px solid var(--ink);transition:background-color .2s,color .2s}
+.shot:hover::after{background:var(--ink);color:var(--paper)}
+.cmp .bar::before{content:"Drag";position:absolute;top:calc(50% + 30px);left:50%;translate:-50% 0;padding:3px 10px;border-radius:999px;background:#fff;color:var(--ink);font-size:.76rem;font-weight:700}
+.duo img.cut{object-fit:contain!important;mix-blend-mode:multiply;padding:9%}
+
+/* case studies */
+.case{padding-top:clamp(92px,12vh,132px)}
+.back{display:inline-flex;gap:8px;align-items:center;font-weight:620;text-decoration:none;font-size:.94rem;margin-bottom:clamp(22px,4vw,44px)}
+.back::before{content:"";width:22px;height:1.5px;background:currentColor;transition:width .25s}
+.back:hover::before{width:34px}
+.case-title{font-size:clamp(2.1rem,6.6vw,6.2rem);letter-spacing:-.03em;max-width:14ch}
+.case-lead{font-size:clamp(1.15rem,1.9vw,1.65rem);line-height:1.36;max-width:36ch;margin-top:clamp(18px,2.6vw,34px);font-weight:470;letter-spacing:-.008em}
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 clamp(16px,2.6vw,40px);margin-top:clamp(28px,4vw,56px);border-top:1.5px solid var(--ink)}
+.meta div{padding:12px 0 16px;border-bottom:1px solid var(--line)}
+.meta dt{font-stretch:88%;font-weight:520;color:var(--steel);font-size:.84rem;margin-bottom:2px}
+.meta dd{margin:0;font-weight:600;line-height:1.35}
+@media (max-width:760px){.meta{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stage{margin-top:clamp(28px,4.5vw,64px);background:var(--mist);border-radius:6px;overflow:hidden;position:relative}
+.stage img.fit{width:100%;max-height:78vh;object-fit:contain;mix-blend-mode:multiply;padding:clamp(12px,3vw,44px)}
+.stage img.fill{width:100%;max-height:82vh;object-fit:cover}
+.cap{margin-top:10px;max-width:70ch}
+.block{display:grid;grid-template-columns:minmax(0,3.2fr) minmax(0,8fr);gap:clamp(14px,4vw,72px);padding-block:clamp(40px,6.5vw,96px);border-bottom:1px solid var(--line)}
+.block > h3{font-size:clamp(1.25rem,2vw,1.75rem);font-stretch:118%;line-height:1.1}
+.block .body > p{max-width:62ch;color:#232933}
+.block .body > p + p{margin-top:1em}
+.block ul.plain{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;max-width:64ch;color:#232933}
+.block ul.plain li{padding-left:18px;position:relative}
+.block ul.plain li::before{content:"";position:absolute;left:0;top:.72em;width:9px;height:1.5px;background:var(--cobalt)}
+.block ul.plain b{font-weight:680;color:var(--ink)}
+@media (max-width:820px){.block{grid-template-columns:1fr}}
+.formula{margin:22px 0 0;padding:18px 20px;background:var(--mist);border-left:3px solid var(--cobalt);border-radius:0 6px 6px 0;font-weight:600;font-stretch:108%;font-variant-numeric:tabular-nums;max-width:62ch;overflow-x:auto}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,2vw,24px);margin-top:26px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,24px);margin-top:26px}
+@media (max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
+figure{margin:0}
+.shot{background:var(--mist);border-radius:6px;overflow:hidden;cursor:zoom-in;border:0;padding:0;width:100%;display:block}
+.shot img{width:100%;aspect-ratio:4/3;object-fit:contain;mix-blend-mode:multiply;padding:6%;transition:scale .5s cubic-bezier(.2,.7,.2,1)}
+.shot.photo img{object-fit:cover;mix-blend-mode:normal;padding:0}
+.shot.tall img{aspect-ratio:3/4}
+.shot.wide img{aspect-ratio:16/7}
+.shot.dark{background:#1b1e24}
+.shot.dark img{mix-blend-mode:normal;padding:0;object-fit:cover}
+.shot:hover img{scale:1.035}
+figcaption{margin-top:8px}
+table.res{width:100%;max-width:760px;border-collapse:collapse;font-variant-numeric:tabular-nums;margin-top:6px}
+.tablebox{overflow-x:auto}
+table.res th,table.res td{text-align:right;padding:12px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.res th:first-child,table.res td:first-child{text-align:left;padding-left:0;font-weight:560}
+table.res thead th{font-stretch:88%;font-weight:520;color:var(--steel);font-size:.86rem;border-bottom:1.5px solid var(--ink)}
+table.res td:last-child{font-weight:720;color:var(--cobalt)}
+table.res td.miss{color:var(--hot)}
+.vid{background:#0c0e12;border-radius:6px;overflow:hidden}
+.vid video{width:100%;aspect-ratio:9/16;object-fit:cover}
+.vids{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,2vw,22px);margin-top:26px;max-width:860px}
+@media (max-width:560px){.vids{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.status{margin-top:22px;padding:16px 18px;border:1.5px dashed var(--steel);border-radius:6px;max-width:62ch;font-weight:520}
+.next{display:block;text-decoration:none;padding-block:clamp(44px,7vw,100px)}
+.next span{display:block}
+.next strong{display:block;font-family:var(--display);font-stretch:125%;font-weight:780;font-size:clamp(1.8rem,5.2vw,4.6rem);letter-spacing:-.025em;line-height:1.02;margin-top:8px;transition:color .25s,translate .35s cubic-bezier(.2,.7,.2,1)}
+.next:hover strong{color:var(--cobalt);translate:14px 0}
+
+/* run chart */
+.chart{margin-top:22px}
+.chart svg{width:100%;height:auto;display:block;touch-action:pan-y;cursor:crosshair}
+.chart text{font-family:var(--body);font-stretch:88%;font-weight:520;fill:var(--steel);font-size:13px;font-variant-numeric:tabular-nums}
+.runcard{margin-top:12px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 22px;align-items:baseline;border-top:1.5px solid var(--ink);padding-top:14px;min-height:108px}
+.runcard .v{font-family:var(--display);font-stretch:125%;font-weight:800;font-size:clamp(1.6rem,3vw,2.4rem);letter-spacing:-.02em;grid-row:span 2;line-height:1}
+.runcard .d{font-weight:560}
+.runcard .n{display:flex;flex-wrap:wrap;gap:4px 22px;font-variant-numeric:tabular-nums;color:#2A303B}
+.runcard .n b{font-weight:700;color:var(--ink)}
+.runcard .keep{font-weight:680;color:var(--cobalt)}
+.runcard .drop{font-weight:680;color:var(--steel)}
+
+/* compare slider */
+.cmp{position:relative;border-radius:6px;overflow:hidden;background:#1b1e24;margin-top:22px;--pos:50%;aspect-ratio:1172/636}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cmp .before{clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.cmp .bar{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;background:#fff;translate:-1px 0;pointer-events:none}
+.cmp .bar::after{content:"";position:absolute;top:50%;left:50%;width:38px;height:38px;border-radius:50%;background:#fff;translate:-50% -50%;box-shadow:0 4px 18px rgba(0,0,0,.4);background-image:linear-gradient(90deg,transparent 30%,var(--ink) 30% 36%,transparent 36% 64%,var(--ink) 64% 70%,transparent 70%)}
+.cmp input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.cmp .lab{position:absolute;bottom:12px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.94);color:var(--ink);font-size:.82rem;font-weight:650;pointer-events:none;font-variant-numeric:tabular-nums}
+.cmp .lab.l{left:12px}.cmp .lab.r{right:12px}
+.cmp:has(input:focus-visible){outline:2px solid var(--cobalt);outline-offset:3px}
+
+/* view switcher */
+.views{display:flex;flex-wrap:wrap;gap:8px;position:absolute;left:14px;top:14px;z-index:2}
+.views button{font:inherit;font-size:.86rem;font-weight:620;padding:7px 14px;border-radius:999px;border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);cursor:pointer;transition:background-color .2s,color .2s}
+.views button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.stage img.swap{transition:opacity .28s}
+
+/* lightbox */
+dialog.zoom{border:0;padding:0;background:transparent;max-width:96vw;max-height:94vh}
+dialog.zoom::backdrop{background:rgba(16,20,28,.88)}
+dialog.zoom img{max-width:96vw;max-height:88vh;background:#fff;border-radius:4px;cursor:zoom-out}
+dialog.zoom form{text-align:right;margin-bottom:8px}
+dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparent;border:1.5px solid #fff;border-radius:999px;padding:6px 16px;cursor:pointer}
+
+@supports (view-transition-name:none){
+  ::view-transition-old(root),::view-transition-new(root){animation-duration:.34s}
+  ::view-transition-group(hero-media){animation-duration:.52s;animation-timing-function:cubic-bezier(.3,.7,.1,1)}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="brand" href="#home">Ghady Sader</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#experience" class="opt">Experience</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="home">
+
+  <section class="hero wrap" id="hero">
+    <p class="hero-lead">Mechanical engineering, UC Berkeley and the American University of Beirut</p>
+    <div class="rig" id="rig">
+      <h1 class="name" id="name" aria-label="Ghady Sader"><span aria-hidden="true">G</span><span aria-hidden="true">H</span><span aria-hidden="true">A</span><span aria-hidden="true">D</span><span aria-hidden="true">Y</span><span class="gap" aria-hidden="true"></span><span aria-hidden="true">S</span><span aria-hidden="true">A</span><span aria-hidden="true">D</span><span aria-hidden="true">E</span><span aria-hidden="true">R</span></h1>
+      <svg class="beam" id="beam" aria-hidden="true" focusable="false"></svg>
+    </div>
+    <div class="hero-foot">
+      <div class="me">
+        <img src="media/headshot.webp" alt="Ghady Sader" width="120" height="150">
+        <p class="hero-say">These are five engineering projects from my degree, with the test results and competition rankings for each.</p>
+      </div>
+      <div aria-hidden="true">
+        <dl class="readout">
+          <div><dt>Load on the beam, P</dt><dd id="ro-p">60 N</dd></div>
+          <div><dt>Largest deflection, δ</dt><dd id="ro-d">6.48 mm</dd></div>
+          <div><dt>Peak bending stress, σ</dt><dd id="ro-s">108 MPa</dd></div>
+        </dl>
+        <p class="note">Press on the bar under my name to load it. It is modeled as a 600 × 20 × 5 mm steel bar, and the sag is drawn at 3×.</p>
+      </div>
+    </div>
+    <nav class="podium" aria-label="Competition results">
+      <a href="#bending-tester"><b>Best Project Award</b><span>3-Point Bending Test Machine, rank 1</span></a>
+      <a href="#fea-pipe"><b>1st place</b><span>FEA Structural Optimization Competition</span></a>
+      <a href="#micro-car"><b>2nd place</b><span>Micro-Car Competition</span></a>
+    </nav>
+    <dl class="proof">
+      <div><dt>GPA above 4.0</dt><dd>Dean's Honor List every semester</dd></div>
+      <div><dt>Full Merit Scholarship</dt><dd>1 of 10 awarded among 6,400+ applicants to AUB in 2024</dd></div>
+      <div><dt><a href="#honor-society">Founder, AUB Honor Society</a></dt><dd>1,877 scholars, the largest student society in AUB's history</dd></div>
+      <div><dt><a href="#experience">VMT GmbH, Herrenknecht Group</a></dt><dd>Automation and navigation systems intern, Germany</dd></div>
+    </dl>
+  </section>
+
+  <section class="sec wrap" id="work">
+    <div class="sec-head">
+      <h2>Selected work</h2>
+      <p class="note">Five machines and studies, 2025 to 2026</p>
+    </div>
+    <nav class="jump" aria-label="Projects">
+      <a href="#bending-tester">Bending test machine <small>Best Project</small></a>
+      <a href="#fea-pipe">FEA-optimized pipe <small>1st</small></a>
+      <a href="#micro-car">Micro-car <small>2nd</small></a>
+      <a href="#corexy-printer">CoreXY 3D printer</a>
+      <a href="#dump-truck">RC dump truck</a>
+    </nav>
+    <div class="plates">
+
+      <article class="plate">
+        <a class="plate-media duo" style="grid-template-columns:1.08fr 1fr" href="#bending-tester" data-go="bending-tester" aria-label="3-point bending test machine, Best Project Award, open case study">
+          <span class="medal">Best Project Award</span>
+          <video data-auto muted loop playsinline preload="metadata" poster="media/bend-poster.webp" src="media/bend-test.mp4"></video>
+          <img class="cut" src="media/bend-chart.webp" alt="Stress-strain curve recorded by the machine, rising to about 100 MPa before fracture">
+        </a>
+        <div class="plate-text">
+          <p class="rank"><b>Best Project Award</b><span>Rank 1 among AUB mechanical engineering students</span></p>
+          <h3><a href="#bending-tester">3-point bending test machine</a></h3>
+          <p>A working materials tester built for $130. I led a team of four on the 3D-printed frame, the stepper-motor drive and the Python software that runs a test and plots it live.</p>
+          <dl class="figs">
+            <div><dd>$130</dd><dt>total build cost</dt></div>
+            <div><dd>Rank 1</dd><dt>among AUB mechanical engineering students</dt></div>
+            <div><dd>Python</dd><dt>motor control and live data</dt></div>
+          </dl>
+          <a class="more" href="#bending-tester">Read the case study</a>
+        </div>
+      </article>
+
+      <article class="plate">
+        <a class="plate-media" href="#fea-pipe" data-go="fea-pipe" aria-label="FEA-optimized steel pipe, 1st place, open case study"><span class="medal">1st place</span><img class="fit" src="media/pipe-stress.webp" alt="Von Mises stress plot of the final pipe design with its tapered web"></a>
+        <div class="plate-text">
+          <p class="rank"><b>1st place</b><span>FEA Structural Optimization Competition, ranked first among all AUB teams</span></p>
+          <h3><a href="#fea-pipe">FEA-optimized steel pipe</a></h3>
+          <p>A thin-walled cantilever pipe that had to be light, stiff and lightly stressed at once. Forty-nine simulation runs turned a sagging rectangular duct into the winning design.</p>
+          <dl class="figs">
+            <div><dd>10.17 → 5.18</dd><dt>competition score, lower wins</dt></div>
+            <div><dd>−90%</dd><dt>outlet deflection</dt></div>
+            <div><dd>−85%</dd><dt>peak stress</dt></div>
+          </dl>
+          <a class="more" href="#fea-pipe">Read the case study</a>
+        </div>
+      </article>
+
+      <article class="plate">
+        <a class="plate-media" href="#micro-car" data-go="micro-car" aria-label="Off-road micro-car, 2nd place, open case study">
+          <span class="medal">2nd place</span>
+          <img class="fit" style="inset:6% 27% 6% 2%;width:71%;height:88%" src="media/car-front.webp" alt="The four-wheel-drive micro-car with its motor, battery and off-road tires" loading="lazy">
+          <video class="inset" data-auto muted loop playsinline preload="metadata" poster="media/car-ramp-poster.webp" src="media/car-ramp.mp4"></video>
+        </a>
+        <div class="plate-text">
+          <p class="rank"><b>2nd place</b><span>Micro-Car Competition, among AUB mechanical engineering teams</span></p>
+          <h3><a href="#micro-car">Off-road micro-car</a></h3>
+          <p>A four-wheel-drive car driven by a single motor through two belts. I led the design and manufacturing with a team of four for a contest of a sprint, an obstacle course, a 30° ramp climb and a tug of war.</p>
+          <dl class="figs">
+            <div><dd>4WD</dd><dt>from a single motor</dt></div>
+            <div><dd>3:1</dd><dt>belt reduction</dt></div>
+            <div><dd>4 events</dd><dt>sprint, obstacles, ramp, tug of war</dt></div>
+          </dl>
+          <a class="more" href="#micro-car">Read the case study</a>
+        </div>
+      </article>
+
+      <article class="plate">
+        <a class="plate-media" href="#corexy-printer" data-go="corexy-printer" aria-label="CoreXY desktop 3D printer, open case study"><img class="fit" src="media/printer-hero.webp" alt="CAD model of the CoreXY printer frame, gantry, bed and electronics bay" loading="lazy"></a>
+        <div class="plate-text">
+          <span class="tag open">Design frozen, competition in December 2026</span>
+          <h3><a href="#corexy-printer">CoreXY desktop 3D printer</a></h3>
+          <p>The full mechanical hardware of a printer. We chose the architecture from four concepts, then checked the design with FEA and fatigue analysis, which led to two design changes.</p>
+          <dl class="figs">
+            <div><dd>52.1 → 24.6 µm</dd><dt>X-beam deflection at the nozzle</dt></div>
+            <div><dd>20,000</dd><dt>Monte Carlo trials on the concept choice</dt></div>
+            <div><dd>1.74 → 2.66</dd><dt>shaft fatigue safety factor</dt></div>
+          </dl>
+          <a class="more" href="#corexy-printer">Read the case study</a>
+        </div>
+      </article>
+
+      <article class="plate">
+        <a class="plate-media" href="#dump-truck" data-go="dump-truck" aria-label="Remote-controlled dump truck, open case study"><img class="fit" src="media/truck-dump.webp" alt="CAD model of the six-wheel dump truck with its bed tipped" loading="lazy"></a>
+        <div class="plate-text">
+          <span class="tag open">Competition at the end of November 2026</span>
+          <h3><a href="#dump-truck">Six-wheel RC dump truck</a></h3>
+          <p>A six-wheel, skid-steer truck that carries 2 kg, crosses 15 cm gaps and climbs a 45° ramp. Motors and dump-bed hinge sized by torque and center-of-gravity calculations in a parametric Fusion 360 model.</p>
+          <dl class="figs">
+            <div><dd>305</dd><dt>components in the CAD assembly</dt></div>
+            <div><dd>445 × 244 mm</dd><dt>inside a 450 × 250 mm limit</dt></div>
+            <div><dd>6</dd><dt>independently driven wheels</dt></div>
+          </dl>
+          <a class="more" href="#dump-truck">Read the case study</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="sec wrap" id="experience">
+    <div class="sec-head">
+      <h2>Experience</h2>
+      <p class="note">Industry, research and leadership</p>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <p class="note num">January 2026<br>Bruchsal, Germany</p>
+        <div><h3>VMT GmbH, Herrenknecht Group</h3><p class="role">Automation and navigation systems intern</p></div>
+        <ul>
+          <li>Set up and calibrated the navigation and automation systems that steer tunnel boring machines on tunneling projects worldwide: total stations, laser targets, gyroscopic systems and guidance software.</li>
+          <li>Learned TBM control and navigation from operators in the TBM control cabin and the surface navigation control room. Went underground into live tunnels and joined site meetings with managers, engineers, contractors and commercial teams.</li>
+          <li>Independently developed a business development roadmap for the Middle East, analyzing regional business culture, economic structures and political systems, and presented it to VMT's Managing Director, Head of Sales and Regional Sales Manager.</li>
+        </ul>
+      </div>
+      <div class="strip" aria-label="Photos from the VMT internship">
+        <figure><button class="shot photo tall" data-zoom><img src="media/vmt-tunnel.webp" alt="A person in a VMT jacket and hard hat walking through a narrow concrete tunnel lined with pipes and hoses" loading="lazy"></button><figcaption class="note">Inside a tunnel under construction, on a site visit</figcaption></figure>
+        <figure><button class="shot photo tall" data-zoom><img src="media/vmt-shaft.webp" alt="View down into a launch shaft, with long yellow hydraulic cylinders pushing a tunneling machine into the wall" loading="lazy"></button><figcaption class="note">Launch shaft of a tunneling machine</figcaption></figure>
+        <figure><button class="shot photo tall" data-zoom><img src="media/vmt-cabin.webp" alt="Control desk with rows of switches, pressure gauges and four screens showing machine data" loading="lazy"></button><figcaption class="note">Control cabin of a tunneling machine</figcaption></figure>
+        <figure><button class="shot photo tall" data-zoom><img src="media/vmt-lab.webp" alt="A sensor on an optical table aimed at a dotted calibration board on a rail" loading="lazy"></button><figcaption class="note">Calibration lab for navigation sensors</figcaption></figure>
+        <figure><button class="shot photo tall" data-zoom><img src="media/vmt-rig.webp" alt="A sensor on an aluminum frame facing coded markers across a concrete hall" loading="lazy"></button><figcaption class="note">Test setup with coded reference markers</figcaption></figure>
+      </div>
+      <div class="row">
+        <p class="note num">June to December 2025<br>Portland, Maine (worked remotely)</p>
+        <div><h3>Born Global Foundation</h3><p class="role">Research intern</p></div>
+        <ul>
+          <li>One of two students selected through a competitive application and interview process.</li>
+          <li>Researched biomimetic coatings for solar panels, mentored by a U.S. Department of Energy Fellow.</li>
+          <li>Conducted a literature review and meta-analysis of diatom-inspired solar coatings that boost absorption and limit overheating.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="honor-society" style="margin-top:clamp(56px,9vw,120px);scroll-margin-top:90px">
+      <p class="lead-say">I founded the largest student society in the history of AUB: <b class="num">1,877</b> scholars.</p>
+      <div class="hs">
+        <figure class="big"><button class="shot photo" data-zoom><img src="media/hs-induction.webp" alt="A full auditorium at the Honor Society induction ceremony" loading="lazy"></button><figcaption class="note">Induction ceremony for new members, with 80% of members attending</figcaption></figure>
+        <figure><button class="shot photo" data-zoom><img src="media/hs-event.webp" alt="Speakers on stage at an Honor Society entrepreneurship event" loading="lazy"></button><figcaption class="note">Entrepreneurship event with a live investor discussion</figcaption></figure>
+        <figure><button class="shot photo" data-zoom><img src="media/hs-podcast.webp" alt="Camera recording an episode of the Honor Society podcast" loading="lazy"></button><figcaption class="note">Recording the podcast, the first produced by an AUB society</figcaption></figure>
+        <figure><button class="shot photo" data-zoom><img src="media/hs-outreach.webp" alt="An Honor Society presentation to a hall of high-school students" loading="lazy"></button><figcaption class="note">Ambassadors presenting at a high school</figcaption></figure>
+      </div>
+      <div class="rows">
+        <div class="row">
+          <p class="note num">April 2025 to present</p>
+          <div><h3>AUB Honor Society</h3><p class="role">Founding president</p></div>
+          <ul>
+            <li>Founded the society to unite 1,877 scholarship recipients, with a mission to recognize their talent and give them the resources, network and opportunities to excel.</li>
+            <li>Manage a $40K budget and launched a scholarship program funded by the society, with the Office of Financial Aid.</li>
+            <li>Launched AUB's first student-led ambassador programs: 50 ambassadors attracting top high-school students in Lebanon and abroad.</li>
+            <li>Created AUB's first society-run podcast.</li>
+            <li>Lead scholar recognition, alumni engagement, events (80% average attendance at the annual induction ceremony), a newsletter and volunteering.</li>
+          </ul>
+        </div>
+        <div class="row">
+          <p class="note num">October 2022 to May 2026</p>
+          <div><h3>Harvard MUN, AUBMUNC and LAUMUN</h3><p class="role">Chair and award-winning delegate</p>
+            <figure class="mini"><button class="shot photo tall" data-zoom><img src="media/mun-harvard.webp" alt="Ghady Sader in a suit holding his Harvard Model United Nations Diplomatic Commendation certificate" loading="lazy"></button><figcaption class="note">Diplomatic Commendation, Harvard MUN 2024</figcaption></figure></div>
+          <ul>
+            <li>Chaired the General Assembly Sixth Committee at AUBMUNC 2026 on liability for AI in decision-making systems.</li>
+            <li>Diplomatic Commendation at Harvard MUN 2024, among 4,000+ delegates. First place at LAUMUN 2023, among 1,000+.</li>
+            <li>Later trained 16 students in public speaking, policy writing, research and UN rules of procedure.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="about">
+    <div class="sec-head">
+      <h2>About</h2>
+      <p class="note">Education and skills</p>
+    </div>
+    <div class="about">
+      <img class="portrait" src="media/headshot.webp" alt="Portrait of Ghady Sader" loading="lazy">
+      <div class="about-text">
+        <p>I'm a mechanical engineering student at UC Berkeley and the American University of Beirut, where I hold one of only 10 Full Merit Scholarships that AUB awarded among its 6,400+ applicants in 2024. It covers 100% of tuition.</p>
+        <p>Most of my projects end in a competition or a physical test, and I usually lead the team. Outside engineering, I founded and run the AUB Honor Society.</p>
+        <dl class="facts">
+          <div><dt>Degree</dt><dd>Bachelor of Engineering in Mechanical Engineering, UC Berkeley and AUB, August 2024 to June 2028</dd></div>
+          <div><dt>Academic record</dt><dd>GPA above 4.0 of 4.0. Dean's Honor List every semester since enrollment.</dd></div>
+          <div><dt>CAD and simulation</dt><dd>SolidWorks (Simulation, Motion), ANSYS (structural and thermal FEA), Fusion 360</dd></div>
+          <div><dt>Programming and analysis</dt><dd>MATLAB, Simulink, Python, LabVIEW, Arduino</dd></div>
+          <div><dt>Manufacturing</dt><dd>Lathe, milling, 3D printing (FDM), sheet metal forming, casting, soldering, mechanical assembly</dd></div>
+          <div><dt>Testing</dt><dd>Data acquisition (NI DAQ), strain gauges, load cells, oscilloscope, multimeter, motor control, materials testing (tensile, impact, fatigue, hardness)</dd></div>
+          <div><dt>Before university</dt><dd>Valedictorian with Highest Distinction, Jesus and Mary School, Rabweh, Lebanon. SAT 1560 of 1600 on the first attempt. 2024 AUB Mathematics Olympiad finalist. Won the school-wide multidisciplinary project competition with a functional Hyperloop prototype.</dd></div>
+          <div><dt>Languages</dt><dd>Fluent in English, French and Arabic</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <h2>Looking for a summer 2027 internship.</h2>
+      <a class="mail" href="mailto:gsader@berkeley.edu" id="mail">gsader@berkeley.edu</a>
+      <div class="cta">
+        <button class="btn" type="button" id="copy">Copy email address</button>
+        <a class="btn ghost" href="https://www.linkedin.com/in/ghady-sader/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="foot"><span>Ghady Sader, Berkeley, California</span><span>Updated November 2026</span></div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ CASE STUDIES ============ -->
+
+<article class="case" id="fea-pipe" data-case>
+  <div class="wrap">
+    <a class="back" href="#work">All work</a>
+    <p class="rank"><b>1st place</b><span>FEA Structural Optimization Competition, among all AUB teams</span></p>
+    <h1 class="case-title">FEA-optimized steel pipe</h1>
+    <p class="case-lead">A 1 mm galvanized-steel pipe, cantilevered from a wall and full of water, redesigned over 49 simulation runs until it ranked first among all AUB teams.</p>
+    <dl class="meta">
+      <div><dt>Result</dt><dd>1st place</dd></div>
+      <div><dt>When</dt><dd>Spring 2026</dd></div>
+      <div><dt>Course</dt><dd>Mechanics of Materials, AUB</dd></div>
+      <div><dt>Tools</dt><dd>SolidWorks Simulation</dd></div>
+    </dl>
+    <div class="stage"><img class="fit" data-hero src="media/pipe-stress.webp" alt="Von Mises stress across the final pipe, highest along the top edge of the web at the wall"></div>
+    <p class="note cap">Von Mises stress in the final design, peaking at 8.1 MPa. Post-processed from the SolidWorks Simulation results.</p>
+
+    <section class="block">
+      <h3>The problem</h3>
+      <div class="body">
+        <p>Carry water from an inlet fixed to a wall to a free outlet 2.0 m forward and 0.5 m to the side, through one 90° turn. Keep at least 15 cm² of flow area everywhere and at least 1 mm of wall. The pipe sags under its own weight and 37.5 N of water, and the lowest score wins:</p>
+        <p class="formula">Score = mass (kg) + 0.2 × outlet deflection (mm) + 80 × peak stress (GPa)</p>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>49 runs</h3>
+      <div class="body">
+        <p>We logged every run in a tracker and kept a change only if it lowered the score. Move along the chart to see what each version changed and what it did to the score.</p>
+        <div class="chart" id="runchart">
+          <svg viewBox="0 0 920 430" role="img" aria-label="Competition score for each of the 49 scored design versions, falling from 10.17 to 5.18" tabindex="0"></svg>
+          <div class="runcard" id="runcard" aria-live="polite"></div>
+          <p class="note" style="margin-top:10px">Filled points lowered the best score and were kept. Hollow points were rejected. Use the arrow keys to step through versions.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>What won</h3>
+      <div class="body">
+        <ul class="plain">
+          <li><b>A circular section.</b> Rectangular ducts stalled at 5.77 because the side arm twists the main run. A 44 mm tube with a 1 mm wall gives 15.20 cm² of flow with the least perimeter and the best torsional stiffness per gram.</li>
+          <li><b>A tapered web.</b> A 1 mm plate on top of the 2 m arm, 200 mm tall at the wall and tapering to nothing at the elbow, follows the bending moment. Stiffness grows with the cube of the web's height but only linearly with its thickness.</li>
+          <li><b>A corner gusset.</b> A 150 × 150 × 1 mm triangle inside the elbow relieves the stress concentration for about 0.09 kg.</li>
+        </ul>
+        <div class="grid2">
+          <figure><button class="shot wide" data-zoom><img src="media/pipe-cad.webp" alt="CAD view of the full pipe with web and gusset" loading="lazy"></button><figcaption class="note">Final geometry: tube, tapered web and corner gusset</figcaption></figure>
+          <figure><button class="shot wide" data-zoom><img src="media/pipe-web.webp" alt="CAD view of the tapered web along the main arm" loading="lazy"></button><figcaption class="note">The web, tallest at the wall</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Results</h3>
+      <div class="body">
+        <div class="tablebox"><table class="res">
+          <thead><tr><th></th><th>First design</th><th>Final design</th><th>Change</th></tr></thead>
+          <tbody>
+            <tr><td>Score</td><td>10.17</td><td>5.18</td><td>−49%</td></tr>
+            <tr><td>Outlet deflection</td><td>10.76 mm</td><td>1.11 mm</td><td>−90%</td></tr>
+            <tr><td>Peak von Mises stress</td><td>54.9 MPa</td><td>8.10 MPa</td><td>−85%</td></tr>
+            <tr><td>Mass</td><td>3.63 kg</td><td>4.31 kg</td><td>+19%</td></tr>
+          </tbody>
+        </table></div>
+        <p style="margin-top:20px">The final study used 10,030 second-order tetrahedral elements and 19,888 nodes, with welded bodies under gravity and the water load. Spending 19% more mass on the web and gusset cut deflection and stress far more than it cost.</p>
+        <div class="grid2">
+          <figure><button class="shot" data-zoom><img src="media/pipe-disp.webp" alt="Displacement plot, largest at the outlet tip" loading="lazy"></button><figcaption class="note">Displacement, 1.11 mm at the outlet. Deformation drawn at 150×.</figcaption></figure>
+          <figure><button class="shot" data-zoom><img src="media/pipe-stress-root.webp" alt="Close-up of stress at the wall end of the web" loading="lazy"></button><figcaption class="note">Stress at the wall, where the web carries the bending.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+    <a class="next" href="#micro-car"><span class="note">Next project</span><strong>Off-road micro-car</strong></a>
+  </div>
+</article>
+
+<article class="case" id="bending-tester" data-case>
+  <div class="wrap">
+    <a class="back" href="#work">All work</a>
+    <p class="rank"><b>Best Project Award</b><span>Rank 1 among AUB mechanical engineering students</span></p>
+    <h1 class="case-title">3-point bending test machine</h1>
+    <p class="case-lead">A desktop machine that bends a specimen until it breaks and plots stress against strain while it does. Built for $130.</p>
+    <dl class="meta">
+      <div><dt>Result</dt><dd>Best Project Award, rank 1</dd></div>
+      <div><dt>Course and term</dt><dd>Engineering Materials, AUB, Fall 2025</dd></div>
+      <div><dt>Role</dt><dd>Team lead, team of 4</dd></div>
+      <div><dt>Tools</dt><dd>3D printing, Python</dd></div>
+    </dl>
+    <div class="stage" style="background:#fff"><img class="fill" data-hero src="media/bend-seq.webp" alt="Four frames of one test: the specimen at rest, bending, at maximum load and fractured"></div>
+    <p class="note cap">One test from start to fracture, taken from the recording.</p>
+
+    <section class="block">
+      <h3>Why build one</h3>
+      <div class="body"><p>Commercial flexural testers cost thousands of dollars. We set out to build a compact machine that loads a beam at its center until it fails and records force and displacement throughout, at a small fraction of that cost.</p></div>
+    </section>
+
+    <section class="block">
+      <h3>How it works</h3>
+      <div class="body">
+        <ul class="plain">
+          <li><b>Frame.</b> A 3D-printed column and crosshead structure on an enclosed base, with two specimen supports and a wedge-shaped loading nose.</li>
+          <li><b>Drive.</b> A stepper motor in the base turns a threaded rod through a flexible coupler and moves the crosshead.</li>
+          <li><b>Software.</b> Custom Python software handles motor control and real-time force-displacement acquisition. It jogs the crosshead at a set speed, zeroes the reading, starts a test with one click, plots the data live and exports it as CSV. A specimen-shape setting lets it convert force to stress.</li>
+        </ul>
+        <div class="grid2" style="max-width:860px">
+          <figure><div class="vid"><video style="aspect-ratio:436/652" controls muted loop playsinline preload="metadata" poster="media/bend-poster.webp" src="media/bend-test.mp4"></video></div><figcaption class="note">A full test, from first contact to fracture</figcaption></figure>
+          <figure><button class="shot photo" data-zoom><img style="aspect-ratio:720/390" src="media/bend-gui.webp" alt="The control software window with jog, zero, start test and save buttons" loading="lazy"></button><figcaption class="note">The control software</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Result</h3>
+      <div class="body">
+        <p>The machine runs a full test to fracture and produces the curve below on its own software: stress climbs to about 100 MPa and the specimen breaks at about 2.9% strain.</p>
+        <p>It won the Best Project Award. The professor adopted the design as the model for future cohorts and proposed developing it further for installation in AUB labs.</p>
+        <figure style="margin-top:26px;max-width:860px"><button class="shot wide" data-zoom><img src="media/bend-chart.webp" alt="Stress-strain curve rising to about 100 MPa and dropping at fracture" loading="lazy"></button><figcaption class="note">Stress against strain, as plotted by the machine</figcaption></figure>
+      </div>
+    </section>
+    <a class="next" href="#fea-pipe"><span class="note">Next project</span><strong>FEA-optimized steel pipe</strong></a>
+  </div>
+</article>
+
+<article class="case" id="corexy-printer" data-case>
+  <div class="wrap">
+    <a class="back" href="#work">All work</a>
+    <h1 class="case-title">CoreXY desktop 3D printer</h1>
+    <p class="case-lead">The complete mechanical hardware of a desktop printer: frame, motion system, bed and electronics bay, designed for a stiffness and precision competition.</p>
+    <dl class="meta">
+      <div><dt>Status</dt><dd>Design frozen, competition in December 2026</dd></div>
+      <div><dt>When</dt><dd>Fall 2026</dd></div>
+      <div><dt>Team</dt><dd>4 people, Mechanical Design I, AUB</dd></div>
+      <div><dt>Tools</dt><dd>SolidWorks, ANSYS, Python</dd></div>
+    </dl>
+    <div class="stage"><img class="fit" data-hero src="media/printer-hero.webp" alt="CAD model of the printer: aluminum extrusion frame, CoreXY gantry, bed on three lead screws and an electronics bay"></div>
+    <p class="note cap">CAD model at the preliminary design stage. The frozen design replaces the X beam with a 20 × 20 × 2 mm tube.</p>
+
+    <section class="block">
+      <h3>Choosing the architecture</h3>
+      <div class="body">
+        <p>Four layouts were sized for the same 180 mm cube and 5,000 mm/s² acceleration, then scored on nine weighted criteria. CoreXY with a Z-moving bed scored 3.85 of 5, ahead of a fixed-gantry Cartesian at 3.65. It has the lightest moving mass, 0.73 kg, and keeps both motors on the frame.</p>
+        <p>To check that the result did not depend on our choice of weights, we ran 20,000 Monte Carlo trials with randomized weights. CoreXY stayed first in 94.3% of them, and in 67.6% when the scores were randomized as well.</p>
+        <div class="grid2">
+          <figure><button class="shot" data-zoom><img src="media/printer-concepts.webp" alt="Top views of the four motion architectures compared" loading="lazy"></button><figcaption class="note">The four concepts, to scale</figcaption></figure>
+          <figure><button class="shot" data-zoom><img src="media/printer-belts.webp" alt="Top view of the two CoreXY belt loops" loading="lazy"></button><figcaption class="note">The two CoreXY belt loops, stacked rather than crossed</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>The beam was twisting</h3>
+      <div class="body">
+        <p>The nozzle hangs 115 mm below the X beam, so a sideways push at the nozzle twists the beam as well as bending it. The preliminary calculation counted only bending and predicted 7.2 µm. FEA in ANSYS gave 52.1 µm, and a hand calculation with torsion included showed twist was 92% of it.</p>
+        <p>A 20 × 20 × 2 mm square tube has the same outer size as the original extrusion, so nothing else had to change. It cut the beam's deflection by 53% and it weighs less: 0.10 kg against 0.13 kg. Drag the handle to compare.</p>
+        <div class="cmp" id="cmp">
+          <img src="media/printer-fea-after.webp" alt="ANSYS deformation plot of the tube beam, 24.6 micrometres at the nozzle" loading="lazy">
+          <img class="before" src="media/printer-fea-before.webp" alt="ANSYS deformation plot of the original extrusion beam, 52.1 micrometres at the nozzle" loading="lazy">
+          <span class="bar"></span>
+          <span class="lab l">Extrusion, 52.1 µm</span><span class="lab r">Tube, 24.6 µm</span>
+          <input type="range" min="0" max="100" value="50" id="cmp-range" aria-label="Compare deformation before and after the beam change">
+        </div>
+        <p class="note cap">Total deformation under a 10 N load at the nozzle, ANSYS Workbench. Mesh refined to 86,000 nodes.</p>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Shaft fatigue</h3>
+      <div class="body">
+        <p>The belt pulls each motor pulley in a fixed direction while its shaft turns, so every revolution fully reverses the bending stress. One shaft carried its pulley 40.5 mm out from the bearing, and a Shigley fatigue analysis gave it a safety factor of 1.74.</p>
+        <p>A 14 mm spacer under that motor shortens the overhang to 26.5 mm and raises the safety factor to 2.66. ANSYS agrees: 1.80 before, 2.78 after.</p>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>The design</h3>
+      <div class="body">
+        <ul class="plain">
+          <li><b>Frame.</b> 2020 aluminum extrusion, 19 pieces, with blind tapped joints. Designed travel is 206 × 182 × 185 mm at an estimated 8.7 kg.</li>
+          <li><b>Motion.</b> CoreXY with 9 mm belts, linear rails on every axis.</li>
+          <li><b>Bed.</b> A 200 × 200 × 6 mm cast aluminum plate on three lead screws, synchronized by one belt to a single hand crank that needs 0.86 N at the knob and holds position by itself.</li>
+          <li><b>Electronics bay.</b> Room, ventilation and cable routing for a power supply and controller board.</li>
+        </ul>
+        <div class="grid3">
+          <figure><button class="shot tall" data-zoom><img src="media/printer-exploded.webp" alt="Exploded view of gantry, frame and electronics bay" loading="lazy"></button><figcaption class="note">Exploded view</figcaption></figure>
+          <figure><button class="shot tall" data-zoom><img src="media/printer-gantry.webp" alt="Close-up of the gantry, rail and carriage" loading="lazy"></button><figcaption class="note">Gantry and carriage</figcaption></figure>
+          <figure><button class="shot tall" data-zoom><img src="media/printer-bay.webp" alt="Cutaway of the electronics bay and the belt that links the lead screws" loading="lazy"></button><figcaption class="note">Bay and Z drive</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Where it stands</h3>
+      <div class="body">
+        <p>The table compares the targets we set with the frozen design. These are design values, and two targets are not met yet.</p>
+        <div class="tablebox"><table class="res">
+          <thead><tr><th></th><th>Target</th><th>Frozen design</th></tr></thead>
+          <tbody>
+            <tr><td>Travel</td><td>≥ 180 mm cube</td><td>206 × 182 × 185 mm</td></tr>
+            <tr><td>Mass</td><td>≤ 9 kg</td><td>8.7 kg</td></tr>
+            <tr><td>Parts cost</td><td>≤ $450</td><td>$446 midpoint</td></tr>
+            <tr><td>Nozzle deflection at 10 N</td><td>≤ 50 µm</td><td class="miss">85 µm</td></tr>
+            <tr><td>Footprint</td><td>≤ 350 × 350 mm</td><td class="miss">406 × 366 mm</td></tr>
+          </tbody>
+        </table></div>
+        <p style="margin-top:20px">Belt stretch is now the largest part of the nozzle deflection, so that is the next thing to improve.</p>
+        <p class="status">Measured stiffness, backlash and alignment, and the competition result, will be added after the build in December 2026.</p>
+      </div>
+    </section>
+    <a class="next" href="#dump-truck"><span class="note">Next project</span><strong>Six-wheel RC dump truck</strong></a>
+  </div>
+</article>
+
+<article class="case" id="micro-car" data-case>
+  <div class="wrap">
+    <a class="back" href="#work">All work</a>
+    <p class="rank"><b>2nd place</b><span>Micro-Car Competition, among AUB mechanical engineering teams</span></p>
+    <h1 class="case-title">Off-road micro-car</h1>
+    <p class="case-lead">A four-wheel-drive contest car that runs on one motor. It finished second among AUB mechanical engineering teams.</p>
+    <dl class="meta">
+      <div><dt>Result</dt><dd>2nd place</dd></div>
+      <div><dt>When</dt><dd>Fall 2026</dd></div>
+      <div><dt>Role</dt><dd>Design and manufacturing lead, team of 4</dd></div>
+      <div><dt>Course</dt><dd>Manufacturing Processes I lab, AUB</dd></div>
+    </dl>
+    <div class="stage"><img class="fit" data-hero src="media/car-front.webp" alt="The micro-car: plywood chassis, DC gear motor, battery under a steel strap and four off-road tires"></div>
+
+    <section class="block">
+      <h3>The contest</h3>
+      <div class="body">
+        <p>Four events decide the ranking: a sprint, an obstacle course, a 30° ramp climb and a tug of war. Speed matters in the sprint and torque matters on the ramp and in the tug of war, so the gear ratio had to balance the two.</p>
+        <div class="vids" style="max-width:580px;grid-template-columns:repeat(2,minmax(0,1fr))">
+          <figure><div class="vid"><video controls muted loop playsinline preload="metadata" poster="media/car-ramp-poster.webp" src="media/car-ramp.mp4"></video></div><figcaption class="note">Full ramp climb to the top, at 2.5× speed</figcaption></figure>
+          <figure><div class="vid"><video controls muted loop playsinline preload="metadata" poster="media/car-sprint-poster.webp" src="media/car-sprint.mp4"></video></div><figcaption class="note">Tug of war</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>One motor, two belts</h3>
+      <div class="body">
+        <p>A single DC gear motor drives the first axle through a timing belt with a 3:1 reduction, which gives up some speed for the torque needed on the ramp and in the tug of war. A second belt under the chassis ties the two axles together, so all four wheels are driven and the car keeps pulling when one axle is in the air over a pipe.</p>
+        <p>We made the parts ourselves: lathe-turned steel shafts, a milled baseplate, bearing holders, motor and battery mounts, fused wiring and the belt drive. Each axle runs in ball bearings pressed into its holders under the baseplate.</p>
+        <div class="grid3">
+          <figure><button class="shot" data-zoom><img src="media/car-hero.webp" alt="Motor pulley, belt and axle pulley seen from the side" loading="lazy"></button><figcaption class="note">Motor to axle, 3:1</figcaption></figure>
+          <figure><button class="shot photo" data-zoom><img src="media/car-under.webp" alt="Underside of the car showing the belt that links both axles and the bearing blocks" loading="lazy"></button><figcaption class="note">Axle to axle, under the chassis</figcaption></figure>
+          <figure><button class="shot" data-zoom><img src="media/car-top.webp" alt="Top view of the car layout" loading="lazy"></button><figcaption class="note">Layout from above</figcaption></figure>
+        </div>
+      </div>
+    </section>
+    <a class="next" href="#corexy-printer"><span class="note">Next project</span><strong>CoreXY desktop 3D printer</strong></a>
+  </div>
+</article>
+
+<article class="case" id="dump-truck" data-case>
+  <div class="wrap">
+    <a class="back" href="#work">All work</a>
+    <h1 class="case-title">Six-wheel RC dump truck</h1>
+    <p class="case-lead">A six-wheel, skid-steer truck designed and manufactured to haul 2 kg, tip it onto a target, cross 15 cm gaps and climb a 45° ramp.</p>
+    <dl class="meta">
+      <div><dt>Status</dt><dd>Competition at the end of November 2026</dd></div>
+      <div><dt>When</dt><dd>Fall 2026</dd></div>
+      <div><dt>Course</dt><dd>Manufacturing Processes I, AUB</dd></div>
+      <div><dt>Tools</dt><dd>Fusion 360</dd></div>
+    </dl>
+    <div class="stage" id="truck-stage">
+      <div class="views" role="group" aria-label="Choose a view of the truck">
+        <button type="button" data-src="media/truck-hero.webp" aria-pressed="true">Loaded</button>
+        <button type="button" data-src="media/truck-dump.webp" aria-pressed="false">Tipping</button>
+        <button type="button" data-src="media/truck-side.webp" aria-pressed="false">Side</button>
+        <button type="button" data-src="media/truck-internals.webp" aria-pressed="false">Inside</button>
+        <button type="button" data-src="media/truck-exploded.webp" aria-pressed="false">Exploded</button>
+      </div>
+      <img class="fit swap" data-hero id="truck-img" src="media/truck-hero.webp" alt="CAD model of the six-wheel dump truck">
+    </div>
+    <p class="note cap">Fusion 360 model, 305 components. In the tipping views the bed is posed at 38° about its hinge.</p>
+
+    <section class="block">
+      <h3>The brief</h3>
+      <div class="body">
+        <ul class="plain">
+          <li>Fit within 450 × 250 mm. The model measures 445 × 244 mm and stands 193 mm tall.</li>
+          <li>Carry a 2 kg payload, tip it onto a floor target and bring the bed back.</li>
+          <li>Drive a T-shaped track and cross table gaps of 5, 10 and 15 cm.</li>
+          <li>Earn bonuses for climbing a 45° ramp and for the tightest turn, and score on payload per kilogram of truck.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Design</h3>
+      <div class="body">
+        <ul class="plain">
+          <li><b>Six driven wheels.</b> Identical drive modules, each a 12 V, 169 rpm gear motor on a 104 mm wheel. With three axles the truck always has two on the table while the third crosses a gap.</li>
+          <li><b>Skid steering.</b> The truck turns in place like a tank to take the turn-radius bonus. The middle axle sits about 2 mm lower so the outer tires scrub less.</li>
+          <li><b>Geared tipping bed.</b> A 35 kg·cm servo drives a 14-tooth pinion against a 42-tooth sector gear on the bed, tripling its torque. The bed pivots on a 6 mm pin in bronze bushings, and a limit switch reports when it is back down.</li>
+          <li><b>Electronics.</b> An ESP32 controller with a radio receiver, two motor drivers, a fused 3S battery, an inertial sensor and four distance sensors, in a sealed cabinet.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Analysis</h3>
+      <div class="body">
+        <p>The model is parametric: one shared set of equations holds the measured bottle and motor dimensions and updates every part. Motor torque on the ramp, hinge torque for tipping at about 4 N·m, and the center of gravity were all sized by hand. The empty truck balances over its middle axle so it can reach across a gap.</p>
+        <p>Reconciling two competing blueprints before the build caught 10 engineering issues on paper, so the final truck was built with no major redesigns.</p>
+        <p class="status">Build photos, test video and the result will be added after the competition at the end of November 2026.</p>
+      </div>
+    </section>
+    <a class="next" href="#bending-tester"><span class="note">Next project</span><strong>3-point bending test machine</strong></a>
+  </div>
+</article>
+
+<dialog class="zoom" id="zoom"><form method="dialog"><button>Close</button></form><img alt=""></dialog>
+
+<script>
+(function(){
+"use strict";
+var RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+var $ = function(s,r){return (r||document).querySelector(s)}, $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var home = $("#home"), cases = $$("[data-case]"), ids = cases.map(function(c){return c.id});
+
+/* ---------- routing between the home page and case studies ---------- */
+var homeY = 0, current = null;
+function apply(h){
+  var isCase = ids.indexOf(h) > -1;
+  cases.forEach(function(c){ c.hidden = c.id !== h; });
+  home.hidden = isCase;
+  $$(".nav a").forEach(function(a){ a.removeAttribute("aria-current"); });
+  if(isCase){ window.scrollTo(0,0); $(".nav a[href='#work']").setAttribute("aria-current","true"); }
+  else {
+    var el = h && h !== "home" ? document.getElementById(h) : null;
+    if(el){ el.scrollIntoView(); } else { window.scrollTo(0, 0); }
+  }
+  current = isCase ? h : null;
+  document.title = isCase ? $("#"+h+" .case-title").textContent + " | Ghady Sader" : "Ghady Sader Portfolio";
+  measure();
+}
+function route(fromEl){
+  var h = location.hash.slice(1);
+  var toCase = ids.indexOf(h) > -1;
+  var heroTo = toCase ? $("#"+h+" [data-hero]") : null;
+  if(document.startViewTransition && !RM && (toCase || current)){
+    if(fromEl) fromEl.style.viewTransitionName = "hero-media";
+    var t = document.startViewTransition(function(){
+      if(fromEl) fromEl.style.viewTransitionName = "";
+      apply(h);
+      if(heroTo && fromEl) heroTo.style.viewTransitionName = "hero-media";
+    });
+    t.finished.then(function(){ if(heroTo) heroTo.style.viewTransitionName = ""; });
+  } else apply(h);
+}
+var pendingFrom = null;
+$$("[data-go]").forEach(function(a){ a.addEventListener("click", function(){ pendingFrom = a.querySelector("img"); }); });
+window.addEventListener("hashchange", function(){ var f = pendingFrom; pendingFrom = null; route(f); });
+
+/* ---------- header ---------- */
+var top = $("#top"), lastY = 0;
+window.addEventListener("scroll", function(){
+  var y = window.scrollY;
+  top.classList.toggle("scrolled", y > 24);
+  top.classList.toggle("away", y > 320 && y > lastY + 4);
+  if(y < lastY - 4) top.classList.remove("away");
+  lastY = y;
+}, {passive:true});
+
+/* ---------- the beam ---------- */
+var NS = "http://www.w3.org/2000/svg";
+var rig = $("#rig"), nameEl = $("#name"), svg = $("#beam"), letters = $$("#name span:not(.gap)");
+var Lmm = 600, EI = 200000 * (20*Math.pow(5,3)/12), EXAG = 3, SEG = 56;
+var W = 0, centers = [], segs = [], st = {t:.5, P:60, v:0, tT:.5, PT:60, auto:true, lastMove:0};
+function mk(n,a){ var e = document.createElementNS(NS,n); for(var k in a) e.setAttribute(k,a[k]); svg.appendChild(e); return e; }
+var ref, hang, head, plabel, pinL, rolR, groundL, groundR;
+function build(){
+  svg.innerHTML = "";
+  ref = mk("line",{stroke:"#D4D9E0","stroke-width":1.5,"stroke-dasharray":"5 6"});
+  groundL = mk("path",{fill:"none",stroke:"#10141C","stroke-width":1.5});
+  groundR = mk("path",{fill:"none",stroke:"#10141C","stroke-width":1.5});
+  pinL = mk("path",{fill:"#FFFFFF",stroke:"#10141C","stroke-width":1.5,"stroke-linejoin":"round"});
+  rolR = mk("circle",{r:9,fill:"#FFFFFF",stroke:"#10141C","stroke-width":1.5});
+  segs = []; for(var i=0;i<SEG;i++) segs.push(mk("line",{"stroke-width":7,"stroke-linecap":"round"}));
+  hang = mk("line",{stroke:"#10141C","stroke-width":1.5});
+  head = mk("path",{fill:"#10141C"});
+  plabel = mk("text",{"font-family":"Archivo, Arial, sans-serif","font-size":14,"font-weight":650,fill:"#10141C","text-anchor":"middle"});
+  plabel.style.fontVariantNumeric = "tabular-nums";
+}
+function measure(){
+  if(home.hidden) return;
+  W = svg.getBoundingClientRect().width;
+  if(!W) return;
+  nameEl.style.fontSize = "";
+  var all = $$("#name span"), tot = all.reduce(function(s,e){ return s + e.getBoundingClientRect().width; }, 0);
+  if(tot){ nameEl.style.fontSize = (parseFloat(getComputedStyle(nameEl).fontSize) * (W*0.93) / tot).toFixed(2) + "px"; }
+  var nb = nameEl.getBoundingClientRect();
+  centers = letters.map(function(s){ var r = s.getBoundingClientRect(); return (r.left + r.width/2 - nb.left) / nb.width; });
+  var y0 = 12;
+  ref.setAttribute("x1",0); ref.setAttribute("x2",W); ref.setAttribute("y1",y0); ref.setAttribute("y2",y0);
+  pinL.setAttribute("d","M0 "+(y0+5)+" l11 19 h-22 z");
+  groundL.setAttribute("d","M-18 "+(y0+25)+" h36");
+  rolR.setAttribute("cx",W); rolR.setAttribute("cy",y0+14);
+  groundR.setAttribute("d","M"+(W-18)+" "+(y0+24.5)+" h36");
+  draw();
+}
+function defl(xmm, amm, P){ // simply supported beam, point load P at a
+  var b = Lmm - amm;
+  if(xmm <= amm) return P*b*xmm*(Lmm*Lmm - b*b - xmm*xmm)/(6*Lmm*EI);
+  return P*amm*(Lmm-xmm)*(2*Lmm*xmm - xmm*xmm - amm*amm)/(6*Lmm*EI);
+}
+function ramp(r){ // steel grey -> cobalt -> hot
+  r = Math.max(0,Math.min(1,r));
+  var a = r < .5 ? [[154,163,174],[22,56,216]] : [[22,56,216],[229,57,27]], k = r < .5 ? r/.5 : (r-.5)/.5;
+  return "rgb("+a[0].map(function(c,i){return Math.round(c+(a[1][i]-c)*k)}).join(",")+")";
+}
+var roP = $("#ro-p"), roD = $("#ro-d"), roS = $("#ro-s");
+function draw(){
+  if(!W) return;
+  var s = W/Lmm, y0 = 12, a = st.t*Lmm, P = st.P, b = Lmm - a;
+  var px = function(xmm){ return defl(xmm,a,P)*s*EXAG; };
+  var Mmax = Math.abs(P)*a*b/Lmm, dmax = 0;
+  for(var i=0;i<SEG;i++){
+    var x1 = i/SEG*Lmm, x2 = (i+1)/SEG*Lmm, xm = (x1+x2)/2;
+    var M = xm <= a ? P*b*xm/Lmm : P*a*(Lmm-xm)/Lmm;
+    var l = segs[i];
+    l.setAttribute("x1",x1*s); l.setAttribute("x2",x2*s);
+    l.setAttribute("y1",y0+px(x1)); l.setAttribute("y2",y0+px(x2));
+    l.setAttribute("stroke", ramp(Math.abs(M)/18000));
+    var d = Math.abs(defl(xm,a,P)); if(d > dmax) dmax = d;
+  }
+  for(var j=0;j<letters.length;j++){
+    var xm2 = centers[j]*Lmm, y = px(xm2), sl = (px(xm2+3) - px(xm2-3))/(6*s);
+    letters[j].style.transform = "translate3d(0,"+y.toFixed(2)+"px,0) rotate("+(Math.atan(sl)*180/Math.PI).toFixed(3)+"deg)";
+  }
+  var ax = a*s, ay = y0 + px(a), len = 26 + Math.min(34, Math.abs(P)*.26);
+  hang.setAttribute("x1",ax); hang.setAttribute("x2",ax); hang.setAttribute("y1",ay+5); hang.setAttribute("y2",ay+len);
+  head.setAttribute("d","M"+ax+" "+(ay+len+9)+" l-6 -11 h12 z");
+  plabel.setAttribute("x",Math.max(34,Math.min(W-34,ax))); plabel.setAttribute("y",ay+len+28);
+  plabel.textContent = "P = "+Math.round(Math.abs(P))+" N";
+  roP.textContent = Math.round(Math.abs(P))+" N";
+  roD.textContent = dmax.toFixed(2)+" mm";
+  roS.textContent = Math.round(Mmax*2.5/(20*125/12))+" MPa";
+}
+var running = false, prev = 0, heroVisible = true;
+function tick(now){
+  if(!running) return;
+  var dt = Math.min(.05,(now - prev)/1000 || .016); prev = now;
+  if(st.auto){ st.tT = .5 + .34*Math.sin(now/2600); st.PT = 60 + 14*Math.sin(now/1700); }
+  st.t += (st.tT - st.t)*Math.min(1,dt*9);
+  var acc = 190*(st.PT - st.P) - 11*st.v; st.v += acc*dt; st.P += st.v*dt;
+  draw();
+  requestAnimationFrame(tick);
+}
+function startLoop(){ if(RM || running || home.hidden || !heroVisible) return; running = true; prev = performance.now(); requestAnimationFrame(tick); }
+function stopLoop(){ running = false; }
+function pointerT(e){ var r = svg.getBoundingClientRect(); return Math.max(.07,Math.min(.93,(e.clientX - r.left)/r.width)); }
+var hero = $("#hero"), pressed = false, idleTimer;
+hero.addEventListener("pointermove", function(e){ st.auto = false; st.tT = pointerT(e); if(!pressed) st.PT = 36; clearTimeout(idleTimer); idleTimer = setTimeout(function(){ if(!pressed) st.auto = true; }, 3200); if(RM){ st.t = st.tT; st.P = st.PT; draw(); } });
+rig.addEventListener("pointerdown", function(e){ pressed = true; st.auto = false; st.tT = pointerT(e); st.PT = 120; if(RM){ st.t = st.tT; st.P = 120; draw(); } });
+window.addEventListener("pointerup", function(){ if(!pressed) return; pressed = false; st.PT = 36; clearTimeout(idleTimer); idleTimer = setTimeout(function(){ st.auto = true; }, 2600); if(RM){ st.P = 36; draw(); } });
+hero.addEventListener("pointerleave", function(){ if(!pressed){ clearTimeout(idleTimer); idleTimer = setTimeout(function(){ st.auto = true; }, 900); } });
+if("IntersectionObserver" in window){
+  new IntersectionObserver(function(es){ heroVisible = es[0].isIntersecting; heroVisible ? startLoop() : stopLoop(); }).observe(hero);
+}
+build();
+window.addEventListener("resize", measure);
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+
+/* ---------- videos play only while on screen ---------- */
+if("IntersectionObserver" in window){
+  var vio = new IntersectionObserver(function(es){ es.forEach(function(e){ var v = e.target; if(e.isIntersecting && !RM){ var p = v.play(); if(p && p.catch) p.catch(function(){}); } else v.pause(); }); }, {threshold:.35});
+  $$("video[data-auto]").forEach(function(v){ vio.observe(v); });
+}
+
+/* ---------- run chart ---------- */
+var RUNS = [{"v":0,"d":"Baseline simple pipe/channel","m":3.632,"x":10.76,"s":54.88,"sc":10.175},{"v":1,"d":"Same as V0 but reduced t","m":3.001,"x":12.13,"s":65.23,"sc":10.645},{"v":2,"d":"V1 + inlet collar (collar t=1.5 mm, collar length=150 mm)","m":3.098,"x":11.43,"s":54.79,"sc":9.767},{"v":3,"d":"V2 + shorter inlet collor (L = 100mm)","m":3.065,"x":11.76,"s":58.34,"sc":10.085},{"v":4,"d":"V2 + larger inlet collor (L = 200mm)","m":3.13,"x":11.13,"s":51.61,"sc":9.485},{"v":5,"d":"V4 + longer inlet collar (L=250 mm)","m":3.162,"x":10.84,"s":50.19,"sc":9.346},{"v":6,"d":"V5 + longer inlet collar (L=300 mm)","m":3.195,"x":10.57,"s":47.34,"sc":9.096},{"v":7,"d":"V6 + longer inlet collar (L=350 mm)","m":3.227,"x":10.34,"s":42.24,"sc":8.674},{"v":8,"d":"V7 + longer inlet collar (L=400 mm)","m":3.26,"x":10.11,"s":42.71,"sc":8.698},{"v":9,"d":"V7+fillet between collar and tube,R=1mm","m":3.227,"x":10.33,"s":39.85,"sc":8.481},{"v":10,"d":"V9+ longer inlet collar (L=375mm)","m":3.244,"x":10.22,"s":38.54,"sc":8.371},{"v":11,"d":"V9+ shorter inlet collar (L=325mm)","m":3.211,"x":10.45,"s":41.73,"sc":8.64},{"v":12,"d":"V9+ R=0.5mm","m":3.227,"x":10.33,"s":45.17,"sc":8.907},{"v":13,"d":"V10+R=0.5mm","m":3.244,"x":10.22,"s":45.55,"sc":8.931},{"v":14,"d":"V9+ R=1.5mm","m":3.227,"x":10.33,"s":39.56,"sc":8.458},{"v":15,"d":"V10+ R=1.5mm","m":3.244,"x":10.21,"s":38.42,"sc":8.359},{"v":16,"d":"V15+ longer inlet collar (L=385mm)","m":3.25,"x":10.17,"s":38.45,"sc":8.36},{"v":17,"d":"V15+ longer inlet collar (L=365mm)","m":3.237,"x":10.26,"s":38.43,"sc":8.364},{"v":18,"d":"V15+ R=1.25mm","m":3.244,"x":10.22,"s":39.67,"sc":8.461},{"v":19,"d":"V15+ R=1.75mm","m":3.244,"x":10.22,"s":38.42,"sc":8.361},{"v":20,"d":"V15 +2nd collar L=50mm, t=2mm","m":3.277,"x":10.04,"s":40.65,"sc":8.537},{"v":21,"d":"V15 +2nd collar L=75mm, t=2mm","m":3.293,"x":9.95,"s":39.77,"sc":8.464},{"v":22,"d":"V15 +2nd collar L=100mm, t=2mm","m":3.31,"x":9.86,"s":40.51,"sc":8.523},{"v":23,"d":"Taller section + V15 collar strategy","m":3.259,"x":8.56,"s":36.21,"sc":7.867},{"v":24,"d":"Taller section + V15 collar strategy","m":3.244,"x":9.38,"s":37.09,"sc":8.087},{"v":25,"d":"Wider section + V15 collar strategy for reference","m":3.279,"x":11.94,"s":40.9,"sc":8.939},{"v":26,"d":"V23+ longer inlet collar (L=400mm)","m":3.275,"x":8.47,"s":36.16,"sc":7.861},{"v":27,"d":"V23+ shorter inlet collar (L=350mm)","m":3.242,"x":8.65,"s":39.02,"sc":8.093},{"v":28,"d":"V26+R=1.0mm","m":3.275,"x":8.47,"s":36.7,"sc":7.904},{"v":29,"d":"Taller section + V23 collar strategy","m":3.97,"x":4.15,"s":26.07,"sc":6.887},{"v":30,"d":"Taller section + V23 collar strategy","m":4.396,"x":3.49,"s":22.84,"sc":6.922},{"v":31,"d":"Taller section + V23 collar strategy","m":4.801,"x":3.13,"s":20.63,"sc":7.078},{"v":32,"d":"Taller section + V23 collar strategy","m":4.233,"x":3.7,"s":24.03,"sc":6.895},{"v":33,"d":"Wider section + V23 collar strategy","m":3.555,"x":5.48,"s":30.08,"sc":7.057},{"v":34,"d":"Wider section + V23 collar strategy","m":3.77,"x":4.65,"s":27.46,"sc":6.896},{"v":35,"d":"V34, collar L=175mm","m":3.621,"x":5.07,"s":33.59,"sc":7.322},{"v":37,"d":"V34, collar L=300 mm","m":3.502,"x":5.65,"s":30.98,"sc":7.11},{"v":38,"d":"V34, collar L=350 mm","m":3.751,"x":4.7,"s":27.3,"sc":6.875},{"v":39,"d":"V34,collar L=400mm","m":3.789,"x":4.6,"s":27.8,"sc":6.933},{"v":40,"d":"V32, collar L=350mm","m":4.212,"x":3.73,"s":23.49,"sc":6.838},{"v":41,"d":"V40,tapered cross section (35.00×42.86) inner, offset=1000mm","m":3.73,"x":4.42,"s":26.06,"sc":6.7},{"v":42,"d":"V40,tapered cross section (35.00×42.86) inner, offset=1250mm,taper 300mm","m":3.822,"x":4.32,"s":25.68,"sc":6.741},{"v":43,"d":"V40,tapered cross section (35.00×42.86) inner, offset=750mm,taper 300mm","m":3.638,"x":4.75,"s":25.37,"sc":6.618},{"v":44,"d":"V40,tapered cross section (35.00×42.86) inner, offset=500mm,taper 500mm, root radius 4","m":3.654,"x":4.71,"s":22.6,"sc":6.405},{"v":45,"d":"V44 thick section of 5mm thickness and 10 mm length","m":3.765,"x":4.68,"s":21.0,"sc":6.382},{"v":46,"d":"V44 plus thick section of 5mm thickness and 10 mm length+cut at the end (top)","m":3.712,"x":4.45,"s":20.63,"sc":6.251},{"v":47,"d":"V46+ metal tendon of 45 degrees and removed collar and the bracket at the beginning","m":3.788,"x":3.19,"s":20.89,"sc":6.097},{"v":48,"d":"changes in fillets for stress concentration","m":3.78,"x":3.19,"s":16.93,"sc":5.772},{"v":49,"d":"Final Version circular profile with gusset and web","m":4.309,"x":1.11,"s":8.1,"sc":5.179}];
+(function(){
+  var box = $("#runchart"); if(!box) return;
+  var s = $("svg",box), card = $("#runcard");
+  var m = {l:46,r:18,t:16,b:40}, VW = 920, VH = 430, x0 = 0, x1 = 49, y0 = 4.6, y1 = 11;
+  var X = function(v){ return m.l + (v-x0)/(x1-x0)*(VW-m.l-m.r); }, Y = function(v){ return VH-m.b - (v-y0)/(y1-y0)*(VH-m.t-m.b); };
+  var add = function(n,a,txt){ var e = document.createElementNS(NS,n); for(var k in a) e.setAttribute(k,a[k]); if(txt!=null) e.textContent = txt; s.appendChild(e); return e; };
+  [5,6,7,8,9,10,11].forEach(function(g){ add("line",{x1:m.l,x2:VW-m.r,y1:Y(g),y2:Y(g),stroke:"#E6E9EE","stroke-width":1}); add("text",{x:m.l-10,y:Y(g)+4,"text-anchor":"end"},g); });
+  [0,10,20,30,40,49].forEach(function(g){ add("text",{x:X(g),y:VH-m.b+22,"text-anchor":"middle"},"V"+g); });
+  var best = Infinity, path = "", kept = [];
+  RUNS.forEach(function(r,i){ var k = r.sc < best; kept.push(k); if(k){ path += (path ? " H"+X(r.v)+" V"+Y(r.sc) : "M"+X(r.v)+" "+Y(r.sc)); best = r.sc; } });
+  path += " H"+X(49);
+  var line = add("path",{d:path,fill:"none",stroke:"#1638D8","stroke-width":2.5,"stroke-linejoin":"round"});
+  var cursor = add("line",{y1:m.t,y2:VH-m.b,stroke:"#10141C","stroke-width":1,"stroke-dasharray":"3 4"});
+  var dots = RUNS.map(function(r,i){ return add("circle",{cx:X(r.v),cy:Y(r.sc),r:kept[i]?5:4.2,fill:kept[i]?"#1638D8":"#FFFFFF",stroke:kept[i]?"#1638D8":"#9AA3AE","stroke-width":1.6}); });
+  var ring = add("circle",{r:10,fill:"none",stroke:"#10141C","stroke-width":2});
+  var sel = RUNS.length-1;
+  function show(i){
+    sel = Math.max(0,Math.min(RUNS.length-1,i)); var r = RUNS[sel];
+    ring.setAttribute("cx",X(r.v)); ring.setAttribute("cy",Y(r.sc)); cursor.setAttribute("x1",X(r.v)); cursor.setAttribute("x2",X(r.v));
+    var d = r.d.charAt(0).toUpperCase()+r.d.slice(1);
+    card.innerHTML = "";
+    var v = document.createElement("div"); v.className = "v num"; v.textContent = "V"+r.v;
+    var dd = document.createElement("div"); dd.className = "d"; dd.textContent = d;
+    var n = document.createElement("div"); n.className = "n";
+    n.innerHTML = "<span>Score <b>"+r.sc.toFixed(2)+"</b></span><span>Mass <b>"+r.m.toFixed(2)+" kg</b></span><span>Deflection <b>"+r.x.toFixed(2)+" mm</b></span><span>Peak stress <b>"+r.s.toFixed(1)+" MPa</b></span><span class='"+(kept[sel]?"keep":"drop")+"'>"+(sel===0?"Starting point":kept[sel]?"Kept":"Rejected")+"</span>";
+    card.appendChild(v); card.appendChild(dd); card.appendChild(n);
+  }
+  function pick(e){ var r = s.getBoundingClientRect(), vx = (e.clientX - r.left)/r.width*VW, bi = 0, bd = 1e9; RUNS.forEach(function(q,i){ var d = Math.abs(X(q.v)-vx); if(d<bd){bd=d;bi=i;} }); show(bi); }
+  s.addEventListener("pointermove",pick); s.addEventListener("pointerdown",pick);
+  s.addEventListener("keydown",function(e){ if(e.key==="ArrowRight"){show(sel+1);e.preventDefault();} if(e.key==="ArrowLeft"){show(sel-1);e.preventDefault();} });
+  show(sel);
+  if(!RM && "IntersectionObserver" in window){
+    var len = line.getTotalLength(); line.style.strokeDasharray = len; line.style.strokeDashoffset = 0;
+    var once = new IntersectionObserver(function(es){ if(es[0].isIntersecting){ once.disconnect(); line.animate([{strokeDashoffset:len},{strokeDashoffset:0}],{duration:1500,easing:"cubic-bezier(.4,0,.2,1)"}); dots.forEach(function(d,i){ d.animate([{opacity:0},{opacity:1}],{duration:260,delay:i*28,fill:"backwards"}); }); } },{threshold:.4});
+    once.observe(s);
+  }
+})();
+
+/* ---------- compare slider ---------- */
+(function(){ var c = $("#cmp"), r = $("#cmp-range"); if(!c) return; r.addEventListener("input",function(){ c.style.setProperty("--pos", r.value+"%"); }); })();
+
+/* ---------- truck views ---------- */
+(function(){
+  var img = $("#truck-img"), btns = $$("#truck-stage .views button");
+  btns.forEach(function(b){ b.addEventListener("click",function(){
+    if(b.getAttribute("aria-pressed")==="true") return;
+    btns.forEach(function(o){ o.setAttribute("aria-pressed", o===b ? "true":"false"); });
+    img.style.opacity = 0;
+    var n = new Image(); n.onload = function(){ img.src = n.src; img.style.opacity = 1; }; n.src = b.dataset.src;
+  }); });
+})();
+
+/* ---------- image zoom ---------- */
+(function(){
+  var dlg = $("#zoom"), zi = $("img",dlg); if(!dlg.showModal) return;
+  $$("[data-zoom]").forEach(function(b){ b.addEventListener("click",function(){ var i = $("img",b); zi.src = i.currentSrc || i.src; zi.alt = i.alt; dlg.showModal(); }); });
+  zi.addEventListener("click",function(){ dlg.close(); });
+  dlg.addEventListener("click",function(e){ if(e.target === dlg) dlg.close(); });
+})();
+
+/* ---------- copy email ---------- */
+(function(){
+  var b = $("#copy"), addr = "gsader@berkeley.edu";
+  b.addEventListener("click",function(){
+    var done = function(){ b.textContent = "Copied"; setTimeout(function(){ b.textContent = "Copy email address"; },1800); };
+    var fail = function(){ var r = document.createRange(); r.selectNodeContents($("#mail")); var s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Address selected, press Ctrl+C"; };
+    try{ navigator.clipboard.writeText(addr).then(done,fail); }catch(e){ fail(); }
+  });
+})();
+
+/* ---------- project switcher on every case study ---------- */
+(function(){
+  var items = [["fea-pipe","FEA-optimized pipe","1st"],["bending-tester","Bending test machine","Best Project"],["corexy-printer","CoreXY 3D printer",""],["micro-car","Micro-car","2nd"],["dump-truck","RC dump truck",""]];
+  cases.forEach(function(c){
+    var nav = document.createElement("nav"); nav.className = "casebar"; nav.setAttribute("aria-label","Projects");
+    items.forEach(function(it){ var a = document.createElement("a"); a.href = "#"+it[0]; a.textContent = it[1]+" "; if(it[2]){ var s = document.createElement("small"); s.textContent = it[2]; a.appendChild(s); } if(it[0]===c.id) a.setAttribute("aria-current","page"); nav.appendChild(a); });
+    var back = $(".back",c); back.parentNode.insertBefore(nav, back.nextSibling);
+  });
+})();
+
+route(null);
+measure();
+startLoop();
+})();
+</script>
+</body>
+</html>
