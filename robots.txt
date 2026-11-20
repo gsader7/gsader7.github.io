@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ghadysader.com/sitemap.xml
