@@ -1122,7 +1122,7 @@ var RUNS = [{"v":0,"d":"Baseline simple pipe/channel","m":3.632,"x":10.76,"s":54
 
 /* ---------- project switcher on every case study ---------- */
 (function(){
-  var items = [["fea-pipe","FEA-optimized pipe","1st"],["bending-tester","Bending test machine","Best Project"],["corexy-printer","CoreXY 3D printer",""],["micro-car","Micro-car","2nd"],["dump-truck","RC dump truck",""]];
+  var items = [["bending-tester","Bending test machine","Best Project"],["fea-pipe","FEA-optimized pipe","1st"],["micro-car","Micro-car","2nd"],["corexy-printer","CoreXY 3D printer",""],["dump-truck","RC dump truck",""]];
   cases.forEach(function(c){
     var nav = document.createElement("nav"); nav.className = "casebar"; nav.setAttribute("aria-label","Projects");
     items.forEach(function(it){ var a = document.createElement("a"); a.href = "#"+it[0]; a.textContent = it[1]+" "; if(it[2]){ var s = document.createElement("small"); s.textContent = it[2]; a.appendChild(s); } if(it[0]===c.id) a.setAttribute("aria-current","page"); nav.appendChild(a); });
