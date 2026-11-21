@@ -26,6 +26,7 @@
 <meta name="twitter:image" content="https://ghadysader.com/media/og.jpg">
 <link rel="preload" href="fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+@font-face{font-family:"Plex";src:url("fonts/plex.woff2") format("woff2");font-weight:100 700;font-style:normal;font-display:swap}
 @font-face{font-family:"Archivo";src:url("fonts/archivo.woff2") format("woff2");font-weight:100 900;font-stretch:62% 125%;font-style:normal;font-display:swap}
 /* Layout idea: a white engineering sheet. CAD renders sit on it without frames, one typeface
    speaks in three widths (expanded = titles, normal = reading, condensed = drawing notes),
@@ -39,7 +40,7 @@
   --cobalt:#1638D8;
   --hot:#E5391B;
   --display:"Archivo","Arial Black","Helvetica Neue",Arial,sans-serif;
-  --body:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Plex","Helvetica Neue",Arial,sans-serif;
   --gut:clamp(18px,4.2vw,64px);
   --max:1360px;
   color-scheme:light;
@@ -58,40 +59,90 @@ h1,h2,h3,h4{margin:0;font-family:var(--display);font-stretch:125%;font-weight:75
 [hidden]{display:none!important}
 
 /* header */
-.top{position:fixed;inset:0 0 auto 0;z-index:50;transition:transform .35s ease,background-color .3s,border-color .3s;border-bottom:1px solid transparent}
-.top.scrolled{background:rgba(255,255,255,.86);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom-color:var(--line)}
+.top{position:fixed;inset:0 0 auto 0;z-index:50;transition:transform .35s ease;background:var(--ink);color:#fff}
+.top.scrolled{box-shadow:0 6px 24px -12px rgba(16,20,28,.5)}
 .top.away{transform:translateY(-100%)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
-.brand{font-family:var(--display);font-stretch:125%;font-weight:800;letter-spacing:-.01em;text-decoration:none;font-size:1rem}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
+.brand{font-family:var(--display);font-stretch:112%;font-weight:760;letter-spacing:-.01em;text-decoration:none;font-size:1.05rem;color:#fff;transition:opacity .25s}
+body.at-hero .brand{opacity:0;pointer-events:none}
 .nav{display:flex;gap:clamp(14px,2.4vw,34px)}
-.nav a{text-decoration:none;font-weight:560;font-size:.94rem;padding:6px 0;background:linear-gradient(var(--ink),var(--ink)) left bottom/0 1.5px no-repeat;transition:background-size .3s}
-.nav a:hover,.nav a[aria-current="true"]{background-size:100% 1.5px}
-@media (max-width:560px){.nav a.opt{display:none}}
+.nav a{text-decoration:none;font-weight:600;font-size:1rem;color:rgba(255,255,255,.82);padding:6px 0;background:linear-gradient(#fff,#fff) left bottom/0 2px no-repeat;transition:background-size .3s,color .2s}
+.nav a:hover,.nav a[aria-current="true"]{background-size:100% 2px;color:#fff}
+@media (max-width:560px){.nav a.opt{display:none}.nav{gap:13px}.nav a{font-size:.9rem}.brand{font-size:.95rem}}
 
 /* hero */
-.hero{padding-top:clamp(92px,11vh,132px);padding-bottom:clamp(36px,6vh,72px);touch-action:pan-y}
-.hero-lead{font-weight:560;font-size:clamp(.95rem,1.2vw,1.1rem);margin-bottom:clamp(18px,3vh,36px)}
-.rig{position:relative;user-select:none;-webkit-user-select:none;cursor:crosshair}
-.name{font-size:clamp(2.2rem,11vw,10rem);font-weight:840;line-height:.86;letter-spacing:-.035em;white-space:nowrap;display:flex;justify-content:space-between;width:100%;margin:0;padding-bottom:.02em}
-.name span{display:inline-block;transform-origin:50% 100%;will-change:transform}
-.name .gap{width:.34em}
-.beam{display:block;width:100%;height:clamp(92px,9vw,124px);overflow:visible;margin-top:-2px}
-.hero-foot{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,5vw,80px);align-items:end;margin-top:clamp(10px,2vh,28px)}
-.me{display:flex;gap:clamp(16px,2vw,28px);align-items:flex-end}
-.me img{width:clamp(84px,8.5vw,120px);height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 18%;border-radius:6px;flex:none}
-.hero-say{font-size:clamp(1.05rem,1.45vw,1.3rem);line-height:1.4;font-weight:480;max-width:34ch;letter-spacing:-.01em}
+.hero{padding-top:clamp(84px,10vh,120px);padding-bottom:clamp(36px,6vh,72px)}
+.h-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,4.5vw,76px);align-items:stretch}
+.h-id{display:flex;flex-direction:column}
+.h-name{font-family:var(--display);font-stretch:125%;font-weight:840;font-size:clamp(3rem,7.4vw,7.2rem);line-height:.88;letter-spacing:-.04em;margin:0;text-transform:uppercase}
+.h-lead{margin-top:clamp(16px,2vw,26px);font-size:clamp(1.12rem,1.55vw,1.42rem);line-height:1.3;color:var(--ink);font-weight:600;letter-spacing:-.01em;max-width:34ch;text-wrap:balance}
+.h-res{margin-top:auto;padding-top:clamp(28px,5vh,56px);display:flex;flex-direction:column}
+.h-res a{position:relative;display:block;padding:14px 0 15px;text-decoration:none;border-top:1px solid var(--line)}
+.h-res a:last-child{border-bottom:1px solid var(--line)}
+.h-res a::before{content:"";position:absolute;left:0;top:-1px;height:2px;width:0;background:var(--cobalt)}
+.h-res a.on::before{width:100%}
+.h-res a.on.run::before{animation:fillbar var(--d,6s) linear both}
+@keyframes fillbar{from{width:0}to{width:100%}}
+.h-res b{display:block;font-family:var(--display);font-stretch:118%;font-weight:780;font-size:clamp(1.15rem,1.7vw,1.6rem);letter-spacing:-.02em;line-height:1.1;color:var(--ink);transition:color .3s}
+.h-res a.on b,.h-res a:hover b{color:var(--cobalt)}
+.h-res span{display:block;margin-top:3px;font-size:.95rem;color:var(--steel)}
+.h-stage{position:relative;aspect-ratio:4/3;background:var(--mist);border-radius:6px;overflow:hidden}
+.h-slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .6s,visibility 0s .6s}
+.h-slide.on{opacity:1;visibility:visible;transition:opacity .6s}
+.h-slide img.fit{position:absolute;inset:5%;width:90%;height:90%;object-fit:contain;mix-blend-mode:multiply}
+.h-slide img.fill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.s-bend{display:grid;grid-template-columns:.62fr 1fr}
+.s-bend video{width:100%;height:100%;object-fit:cover}
+.s-bend .plot{background:var(--paper);display:flex;flex-direction:column;justify-content:center;padding:clamp(10px,2vw,28px) clamp(10px,2vw,28px) clamp(10px,2vw,28px) clamp(6px,1vw,14px);min-width:0;border:1px solid var(--mist);border-left:0}
+.plot svg{width:100%;height:auto;overflow:visible}
+.plot text{font-family:var(--body);font-size:11px;fill:var(--steel)}
+.plot .now{display:block;font-family:var(--display);font-stretch:112%;font-weight:700;font-size:clamp(1.1rem,1.8vw,1.7rem);letter-spacing:-.02em;font-variant-numeric:tabular-nums;padding-left:34px;line-height:1.1}
+.plot .now small{display:block;font-family:var(--body);font-weight:400;font-size:.82rem;color:var(--steel);letter-spacing:0;margin-top:2px}
+.s-car .inset{position:absolute;right:4%;bottom:5%;width:23%;aspect-ratio:9/16;object-fit:cover;border-radius:5px;box-shadow:0 18px 40px -12px rgba(16,20,28,.55);border:2px solid var(--paper)}
+.h-cap{margin-top:10px;min-height:1.5em}
+.hero .proof{margin-top:clamp(28px,4.5vh,52px);border-top:1.5px solid var(--ink)}
+.h-grid{align-items:end;grid-template-columns:minmax(0,1fr) clamp(240px,27vw,370px)}
+.h-about{margin-top:auto;padding-top:clamp(20px,3vh,36px);font-size:clamp(1rem,1.15vw,1.1rem);line-height:1.5;max-width:52ch}
+.h-about a{text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px;text-decoration-thickness:1.5px}
+.h-about a:hover{color:var(--cobalt);text-decoration-color:currentColor}
+.h-id{align-self:stretch}
+.h-photo{margin:0}
+.h-photo{background:var(--mist);border-radius:6px;overflow:hidden}
+.h-photo img{width:100%;height:auto;aspect-ratio:8/9;object-fit:cover;object-position:50% 12%;mix-blend-mode:multiply}
+.h-photo figcaption{margin-top:8px}
+.aw{margin-top:clamp(30px,5vh,60px)}
+.aw-h{font-family:var(--display);font-stretch:118%;font-weight:760;font-size:1.05rem;letter-spacing:-.01em;margin:0 0 10px}
+.aw .podium{margin-top:0}
+.aw-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 clamp(16px,2vw,32px)}
+.aw-list li{padding:13px 0 14px;border-bottom:1px solid var(--line)}
+.aw-list b{display:block;font-weight:600;line-height:1.3}
+.aw-list{grid-template-columns:repeat(12,minmax(0,1fr))}
+.aw-list li{grid-column:span 3}
+.aw-list li.key{grid-column:span 6;padding-top:16px}
+.aw-list li.key b{font-family:var(--display);font-stretch:118%;font-weight:760;font-size:clamp(1.1rem,1.5vw,1.4rem);letter-spacing:-.02em;line-height:1.1}
+.aw-list li.key span{font-size:.95rem;color:var(--ink)}
+.aw-list span{display:block;margin-top:2px;font-size:.9rem;line-height:1.4;color:var(--steel)}
+@media (max-width:900px){.h-grid{grid-template-columns:1fr;gap:18px}.h-id{display:contents}.h-name{order:0}.h-lead{order:1;margin-top:-6px}.h-photo{order:2;max-width:300px}.h-about{order:3;padding-top:0}.aw-list{grid-template-columns:repeat(2,minmax(0,1fr))}.aw-list li,.aw-list li.key{grid-column:auto}}
+@media (max-width:520px){.aw-list{grid-template-columns:1fr}}
+.others{margin-top:clamp(56px,9vw,120px)}
+.others-note{margin:0 0 clamp(18px,2.5vw,30px);font-size:1rem}
+.others-h{font-family:var(--display);font-stretch:118%;font-weight:760;font-size:clamp(1.3rem,2.2vw,2rem);letter-spacing:-.02em;margin:0 0 6px;padding-top:18px;border-top:1.5px solid var(--ink)}
+.others .row{grid-template-columns:minmax(0,4fr) minmax(0,7fr)}
+@media (max-width:820px){.others .row{grid-template-columns:1fr}}
+.lead-row{display:grid;grid-template-columns:minmax(0,1fr) clamp(240px,30vw,420px);gap:clamp(24px,5vw,80px);align-items:end;margin-bottom:clamp(28px,4vw,56px)}
+.lead-row .lead-say{margin-bottom:0}
+.about-photo{margin:0}
+.about-photo .shot img{aspect-ratio:5/4}
+.about-photo figcaption{margin-top:8px}
+@media (max-width:760px){.lead-row{grid-template-columns:1fr}.lead-photo{max-width:420px}}
+/* plate plot */
+.plate-media.duo .plot{background:var(--paper);display:flex;flex-direction:column;justify-content:center;padding:clamp(8px,1.6vw,22px) clamp(8px,1.6vw,22px) clamp(8px,1.6vw,22px) 4px;min-width:0;border:1px solid var(--mist);border-left:0}
 .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 22px;border-radius:999px;border:1.5px solid var(--ink);font-weight:620;font-size:.96rem;text-decoration:none;background:var(--ink);color:var(--paper);cursor:pointer;font-family:inherit;transition:background-color .2s,color .2s,border-color .2s}
 .btn:hover{background:var(--cobalt);border-color:var(--cobalt)}
 .btn.ghost{background:transparent;color:var(--ink)}
 .btn.ghost:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.readout{border-top:1.5px solid var(--ink);font-variant-numeric:tabular-nums}
-.readout div{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}
-.readout dt{font-stretch:88%;font-weight:520;color:var(--steel);font-size:.9rem}
-.readout dd{margin:0;font-weight:680;font-stretch:112%}
-.readout + .note{margin-top:10px}
 dl{margin:0}
-@media (max-width:760px){.hero-foot{grid-template-columns:1fr}}
 
 /* section heads */
 .sec{padding-block:clamp(56px,9vw,128px)}
@@ -153,10 +204,13 @@ dl{margin:0}
 .lead-say b{font-weight:inherit;color:var(--cobalt)}
 
 /* honor society photos */
-.hs{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:clamp(10px,1.6vw,20px);margin-bottom:clamp(32px,5vw,64px);align-items:start}
+.hs{display:grid;grid-template-columns:2fr 1fr 1fr;gap:clamp(10px,1.6vw,20px);margin-bottom:clamp(32px,5vw,64px);align-items:start}
 .hs .shot img{aspect-ratio:4/3}
-.hs .big .shot img{aspect-ratio:3/2}
-@media (max-width:900px){.hs{grid-template-columns:1fr 1fr 1fr}.hs .big{grid-column:1 / -1}}
+.hs .big{grid-row:span 2;display:flex;flex-direction:column;align-self:stretch}
+.hs .big .shot{flex:1;min-height:0}
+.hs .big .shot img{aspect-ratio:auto;height:100%;min-height:260px}
+.hs figure{margin:0}
+@media (max-width:900px){.hs{grid-template-columns:1fr 1fr}.hs .big{grid-column:1 / -1;grid-row:auto}.hs .big .shot img{aspect-ratio:16/9;height:auto;min-height:0}}
 @media (max-width:520px){.hs{grid-template-columns:1fr}}
 
 
@@ -173,7 +227,7 @@ dl{margin:0}
 .proof dd{margin:3px 0 0;font-size:.9rem;line-height:1.35;color:var(--steel);font-weight:520}
 @media (max-width:900px){.proof{grid-template-columns:repeat(2,minmax(0,1fr))}.proof div:nth-child(3){padding-left:0;border-left:0}.proof div:nth-child(n+3){border-top:1px solid var(--line)}}
 @media (max-width:520px){.proof{grid-template-columns:1fr}.proof div + div{padding-left:0;border-left:0;border-top:1px solid var(--line)}}
-.strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(10px,1.4vw,18px);padding-block:clamp(22px,3vw,38px);border-bottom:1px solid var(--line)}
+.strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.4vw,18px);padding-block:clamp(22px,3vw,38px);border-bottom:1px solid var(--line)}
 .strip figure,.mini{margin:0}
 .strip figcaption,.mini figcaption{margin-top:8px}
 @media (max-width:900px){.strip{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:18px}.strip figure{flex:0 0 min(58vw,260px);scroll-snap-align:start}}
@@ -185,11 +239,11 @@ dl{margin:0}
 .portrait{aspect-ratio:4/5;object-fit:cover;object-position:50% 18%;width:100%;border-radius:6px;background:var(--mist)}
 .about-text > p{font-size:clamp(1.1rem,1.55vw,1.4rem);line-height:1.42;max-width:38ch;letter-spacing:-.005em}
 .about-text > p + p{margin-top:1em}
-.facts{margin-top:clamp(28px,4vw,52px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(20px,3vw,44px)}
+.facts{margin-top:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(20px,3vw,44px)}
 .facts div{border-top:1px solid var(--line);padding:14px 0 18px}
 .facts dt{font-stretch:88%;font-weight:520;color:var(--steel);font-size:.86rem;margin-bottom:4px}
 .facts dd{margin:0;font-weight:540;line-height:1.4}
-@media (max-width:820px){.about{grid-template-columns:1fr}.portrait{max-width:340px}.facts{grid-template-columns:1fr}}
+@media (max-width:820px){.about{grid-template-columns:1fr}.about-photo{max-width:420px}.facts{grid-template-columns:1fr}}
 
 /* contact */
 .contact{background:var(--ink);color:var(--paper);padding-block:clamp(64px,10vw,140px)}
@@ -209,6 +263,7 @@ dl{margin:0}
 .podium a{display:flex;flex-direction:column;gap:4px;padding:16px 18px 18px 0;text-decoration:none;border-bottom:1px solid var(--line);position:relative;transition:background-color .25s,padding-left .25s}
 .podium a + a{padding-left:18px;border-left:1px solid var(--line)}
 .podium a:hover{background:var(--mist);padding-left:18px}
+.podium a + a:hover{padding-left:36px}
 .podium b{font-family:var(--display);font-stretch:125%;font-weight:820;font-size:clamp(1.2rem,1.9vw,1.8rem);letter-spacing:-.025em;line-height:1.05;color:var(--cobalt);white-space:nowrap}
 .podium span{font-weight:600;line-height:1.3}
 .podium em{font-style:normal;font-stretch:88%;font-weight:560;font-size:.86rem;color:var(--steel);margin-top:4px;display:inline-flex;align-items:center;gap:8px}
@@ -353,6 +408,7 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
       <a href="#experience" class="opt">Experience</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
+      <a href="Ghady_Sader_Resume.pdf" target="_blank" rel="noopener">Resume</a>
     </nav>
   </div>
 </header>
@@ -360,36 +416,30 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
 <main id="home">
 
   <section class="hero wrap" id="hero">
-    <p class="hero-lead">Mechanical engineering, UC Berkeley and the American University of Beirut</p>
-    <div class="rig" id="rig">
-      <h1 class="name" id="name" aria-label="Ghady Sader"><span aria-hidden="true">G</span><span aria-hidden="true">H</span><span aria-hidden="true">A</span><span aria-hidden="true">D</span><span aria-hidden="true">Y</span><span class="gap" aria-hidden="true"></span><span aria-hidden="true">S</span><span aria-hidden="true">A</span><span aria-hidden="true">D</span><span aria-hidden="true">E</span><span aria-hidden="true">R</span></h1>
-      <svg class="beam" id="beam" aria-hidden="true" focusable="false"></svg>
-    </div>
-    <div class="hero-foot">
-      <div class="me">
-        <img src="media/headshot.webp" alt="Ghady Sader" width="120" height="150">
-        <p class="hero-say">These are five engineering projects from my degree, with the test results and competition rankings for each.</p>
+    <div class="h-grid">
+      <div class="h-id">
+        <h1 class="h-name" id="name">Ghady<br>Sader</h1>
+        <p class="h-lead">Mechanical engineering, UC Berkeley and the American University of Beirut</p>
+        <p class="h-about">I design and build machines, and most of the ones on this page were built to compete. I interned at <a href="#experience">VMT GmbH (Herrenknecht Group)</a> in Germany on navigation systems for tunnel boring machines, and with the <a href="#born-global">Born Global Foundation</a> (based in Portland, Maine) on coatings for solar panels. I also founded the <a href="#honor-society">AUB Honor Society</a>, which has 1,877 members.</p>
       </div>
-      <div aria-hidden="true">
-        <dl class="readout">
-          <div><dt>Load on the beam, P</dt><dd id="ro-p">60 N</dd></div>
-          <div><dt>Largest deflection, δ</dt><dd id="ro-d">6.48 mm</dd></div>
-          <div><dt>Peak bending stress, σ</dt><dd id="ro-s">108 MPa</dd></div>
-        </dl>
-        <p class="note">Press on the bar under my name to load it. It is modeled as a 600 × 20 × 5 mm steel bar, and the sag is drawn at 3×.</p>
-      </div>
+      <figure class="h-photo"><img src="media/headshot-top.webp" alt="Portrait of Ghady Sader" width="720" height="900"></figure>
     </div>
-    <nav class="podium" aria-label="Competition results">
-      <a href="#bending-tester"><b>Best Project Award</b><span>3-Point Bending Test Machine, rank 1</span></a>
-      <a href="#fea-pipe"><b>1st place</b><span>FEA Structural Optimization Competition</span></a>
-      <a href="#micro-car"><b>2nd place</b><span>Micro-Car Competition</span></a>
-    </nav>
-    <dl class="proof">
-      <div><dt>GPA above 4.0</dt><dd>Dean's Honor List every semester</dd></div>
-      <div><dt>Full Merit Scholarship</dt><dd>1 of 10 awarded among 6,400+ applicants to AUB in 2024</dd></div>
-      <div><dt><a href="#honor-society">Founder, AUB Honor Society</a></dt><dd>1,877 scholars, the largest student society in AUB's history</dd></div>
-      <div><dt><a href="#experience">VMT GmbH, Herrenknecht Group</a></dt><dd>Automation and navigation systems intern, Germany</dd></div>
-    </dl>
+    <div class="aw" id="awards">
+      <h2 class="aw-h">Awards</h2>
+      <nav class="podium" aria-label="Engineering competition results">
+        <a href="#bending-tester"><b>Best Project Award</b><span>3-Point Bending Test Machine, rank 1</span></a>
+        <a href="#fea-pipe"><b>1st place</b><span>FEA Structural Optimization Competition</span></a>
+        <a href="#micro-car"><b>2nd place</b><span>Micro-Car Competition</span></a>
+      </nav>
+      <ul class="aw-list">
+        <li class="key"><b>Full Merit Scholarship</b><span>1 of 10 awarded among 6,400+ applicants to the American University of Beirut in 2024</span></li>
+        <li class="key"><b>Dean's Honor List</b><span>Every semester since enrollment, GPA above 4.0</span></li>
+        <li><b>Diplomatic Commendation Award</b><span>Harvard Model United Nations 2024, among 4,000+ delegates</span></li>
+        <li><b>Secretary General Award, first prize</b><span>GC LAU Model United Nations 2023, among 1,000+ delegates</span></li>
+        <li><b>Valedictorian, Highest Distinction</b><span>First in the class of 2024, Jesus and Mary School</span></li>
+        <li><b>Multidisciplinary project competition winner</b><span>High school, with a functional Hyperloop prototype, 2023</span></li>
+      </ul>
+    </div>
   </section>
 
   <section class="sec wrap" id="work">
@@ -409,8 +459,8 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
       <article class="plate">
         <a class="plate-media duo" style="grid-template-columns:1.08fr 1fr" href="#bending-tester" data-go="bending-tester" aria-label="3-point bending test machine, Best Project Award, open case study">
           <span class="medal">Best Project Award</span>
-          <video data-auto muted loop playsinline preload="metadata" poster="media/bend-poster.webp" src="media/bend-test.mp4"></video>
-          <img class="cut" src="media/bend-chart.webp" alt="Stress-strain curve recorded by the machine, rising to about 100 MPa before fracture">
+          <video id="pv-bend" data-auto muted loop playsinline preload="metadata" poster="media/bend-poster.webp" src="media/bend-test.mp4"></video>
+          <span class="plot"><span class="now"><span id="h-now">0 MPa</span><small>Stress in the specimen</small></span><svg id="h-plot" viewBox="0 0 400 250" role="img" aria-label="Stress against strain drawn in step with the video, rising to about 100 MPa before the specimen fractures"></svg></span>
         </a>
         <div class="plate-text">
           <p class="rank"><b>Best Project Award</b><span>Rank 1 among AUB mechanical engineering students</span></p>
@@ -490,6 +540,33 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
       </article>
 
     </div>
+    <div class="others" id="other-projects">
+      <h3 class="others-h">Additional projects</h3>
+      <p class="note others-note">These are not featured as full case studies here, but I would be glad to discuss the engineering behind them.</p>
+      <div class="rows">
+        <div class="row">
+          <div><h3>Barrel-cam cap-screwing mechanism</h3><p class="role">Mechanism design and motion analysis</p></div>
+          <ul>
+            <li>The cap-screwing unit of an automated bottle-capping machine. It picks up a cap, presses and screws it on, then retracts, all from a single 6 rpm motor input.</li>
+            <li>A barrel cam runs seven stages in a 10-second cycle. An 8:1 compound gear train spins the cap holder at 48 rpm, a clutch passes rotation only during the press, and a Geneva wheel indexes and locks each bottle.</li>
+            <li>Cam profile designed in MATLAB and checked in SolidWorks Motion: carriage velocity matched the calculation within 0.01% and cap speed within 0.18%. The simulated cap made 2.56 turns against a design value of 2, inside the required 1 to 3.</li>
+          </ul>
+        </div>
+        <div class="row">
+          <div><h3>Solar PV feasibility study</h3><p class="role">Technical and financial model</p></div>
+          <ul>
+            <li>A study on adding 300 kWp of solar panels with 300 kWh of LiFePO4 battery storage to a residential tower in Beirut, using the building's real energy consumption data.</li>
+            <li>Financial model covering net present value, internal rate of return and levelized cost of energy, delivered as a report, an Excel model and an interactive web app.</li>
+          </ul>
+        </div>
+        <div class="row">
+          <div><h3>Smart-home automation system</h3><p class="role">Arduino</p></div>
+          <ul>
+            <li>An Arduino-based home automation system, built and simulated in Tinkercad.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="sec wrap" id="experience">
@@ -509,12 +586,11 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
       </div>
       <div class="strip" aria-label="Photos from the VMT internship">
         <figure><button class="shot photo tall" data-zoom><img src="media/vmt-tunnel.webp" alt="A person in a VMT jacket and hard hat walking through a narrow concrete tunnel lined with pipes and hoses" loading="lazy"></button><figcaption class="note">Inside a tunnel under construction, on a site visit</figcaption></figure>
-        <figure><button class="shot photo tall" data-zoom><img src="media/vmt-shaft.webp" alt="View down into a launch shaft, with long yellow hydraulic cylinders pushing a tunneling machine into the wall" loading="lazy"></button><figcaption class="note">Launch shaft of a tunneling machine</figcaption></figure>
         <figure><button class="shot photo tall" data-zoom><img src="media/vmt-cabin.webp" alt="Control desk with rows of switches, pressure gauges and four screens showing machine data" loading="lazy"></button><figcaption class="note">Control cabin of a tunneling machine</figcaption></figure>
         <figure><button class="shot photo tall" data-zoom><img src="media/vmt-lab.webp" alt="A sensor on an optical table aimed at a dotted calibration board on a rail" loading="lazy"></button><figcaption class="note">Calibration lab for navigation sensors</figcaption></figure>
         <figure><button class="shot photo tall" data-zoom><img src="media/vmt-rig.webp" alt="A sensor on an aluminum frame facing coded markers across a concrete hall" loading="lazy"></button><figcaption class="note">Test setup with coded reference markers</figcaption></figure>
       </div>
-      <div class="row">
+      <div class="row" id="born-global" style="scroll-margin-top:46vh">
         <p class="note num">June to December 2025<br>Portland, Maine (worked remotely)</p>
         <div><h3>Born Global Foundation</h3><p class="role">Research intern</p></div>
         <ul>
@@ -528,10 +604,11 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
     <div id="honor-society" style="margin-top:clamp(56px,9vw,120px);scroll-margin-top:90px">
       <p class="lead-say">I founded the largest student society in the history of AUB: <b class="num">1,877</b> scholars.</p>
       <div class="hs">
-        <figure class="big"><button class="shot photo" data-zoom><img src="media/hs-induction.webp" alt="A full auditorium at the Honor Society induction ceremony" loading="lazy"></button><figcaption class="note">Induction ceremony for new members, with 80% of members attending</figcaption></figure>
+        <figure class="big"><button class="shot photo" data-zoom><img src="media/hs-hall.webp" alt="Ghady Sader at the lectern addressing a full auditorium, seen from the back rows" loading="lazy"></button><figcaption class="note">Addressing a full hall of Honor Society members</figcaption></figure>
+        <figure><button class="shot photo" data-zoom><img src="media/hs-partnership.webp" alt="Ghady Sader at the lectern presenting a slide to new members" loading="lazy"></button><figcaption class="note">Presenting the society to new members at the 2026–27 induction ceremony</figcaption></figure>
         <figure><button class="shot photo" data-zoom><img src="media/hs-event.webp" alt="Speakers on stage at an Honor Society entrepreneurship event" loading="lazy"></button><figcaption class="note">Entrepreneurship event with a live investor discussion</figcaption></figure>
-        <figure><button class="shot photo" data-zoom><img src="media/hs-podcast.webp" alt="Camera recording an episode of the Honor Society podcast" loading="lazy"></button><figcaption class="note">Recording the podcast, the first produced by an AUB society</figcaption></figure>
-        <figure><button class="shot photo" data-zoom><img src="media/hs-outreach.webp" alt="An Honor Society presentation to a hall of high-school students" loading="lazy"></button><figcaption class="note">Ambassadors presenting at a high school</figcaption></figure>
+        <figure><button class="shot photo" data-zoom><img src="media/hs-podcast.webp" alt="Camera recording an episode of the Honor Society podcast" loading="lazy"></button><figcaption class="note">Launching the society's podcast: recording the first episode</figcaption></figure>
+        <figure><button class="shot photo" data-zoom><img src="media/hs-outreach.webp" alt="An Honor Society presentation to a hall of high-school students" loading="lazy"></button><figcaption class="note">Honor Society ambassadors presenting at a high school in the UAE</figcaption></figure>
       </div>
       <div class="rows">
         <div class="row">
@@ -561,14 +638,11 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
 
   <section class="sec wrap" id="about">
     <div class="sec-head">
-      <h2>About</h2>
-      <p class="note">Education and skills</p>
+      <h2>Education and skills</h2>
     </div>
     <div class="about">
-      <img class="portrait" src="media/headshot.webp" alt="Portrait of Ghady Sader" loading="lazy">
+      <figure class="about-photo"><button class="shot photo" data-zoom><img src="media/me-podium.webp" alt="Ghady Sader speaking at a lectern bearing the American University of Beirut crest" loading="lazy"></button><figcaption class="note">Speaking at an AUB Honor Society event</figcaption></figure>
       <div class="about-text">
-        <p>I'm a mechanical engineering student at UC Berkeley and the American University of Beirut, where I hold one of only 10 Full Merit Scholarships that AUB awarded among its 6,400+ applicants in 2024. It covers 100% of tuition.</p>
-        <p>Most of my projects end in a competition or a physical test, and I usually lead the team. Outside engineering, I founded and run the AUB Honor Society.</p>
         <dl class="facts">
           <div><dt>Degree</dt><dd>Bachelor of Engineering in Mechanical Engineering, UC Berkeley and AUB, August 2024 to June 2028</dd></div>
           <div><dt>Academic record</dt><dd>GPA above 4.0 of 4.0. Dean's Honor List every semester since enrollment.</dd></div>
@@ -590,6 +664,7 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
       <div class="cta">
         <button class="btn" type="button" id="copy">Copy email address</button>
         <a class="btn ghost" href="https://www.linkedin.com/in/ghady-sader/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn ghost" href="Ghady_Sader_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
       </div>
       <div class="foot"><span>Ghady Sader, Berkeley, California</span><span>Updated November 2026</span></div>
     </div>
@@ -606,8 +681,6 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
     <p class="case-lead">A 1 mm galvanized-steel pipe, cantilevered from a wall and full of water, redesigned over 49 simulation runs until it ranked first among all AUB teams.</p>
     <dl class="meta">
       <div><dt>Result</dt><dd>1st place</dd></div>
-      <div><dt>When</dt><dd>Spring 2026</dd></div>
-      <div><dt>Course</dt><dd>Mechanics of Materials, AUB</dd></div>
       <div><dt>Tools</dt><dd>SolidWorks Simulation</dd></div>
     </dl>
     <div class="stage"><img class="fit" data-hero src="media/pipe-stress.webp" alt="Von Mises stress across the final pipe, highest along the top edge of the web at the wall"></div>
@@ -679,7 +752,6 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
     <p class="case-lead">A desktop machine that bends a specimen until it breaks and plots stress against strain while it does. Built for $130.</p>
     <dl class="meta">
       <div><dt>Result</dt><dd>Best Project Award, rank 1</dd></div>
-      <div><dt>Course and term</dt><dd>Engineering Materials, AUB, Fall 2025</dd></div>
       <div><dt>Role</dt><dd>Team lead, team of 4</dd></div>
       <div><dt>Tools</dt><dd>3D printing, Python</dd></div>
     </dl>
@@ -725,8 +797,7 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
     <p class="case-lead">The complete mechanical hardware of a desktop printer: frame, motion system, bed and electronics bay, designed for a stiffness and precision competition.</p>
     <dl class="meta">
       <div><dt>Status</dt><dd>Design frozen, competition in December 2026</dd></div>
-      <div><dt>When</dt><dd>Fall 2026</dd></div>
-      <div><dt>Team</dt><dd>4 people, Mechanical Design I, AUB</dd></div>
+      <div><dt>Team</dt><dd>4 people</dd></div>
       <div><dt>Tools</dt><dd>SolidWorks, ANSYS, Python</dd></div>
     </dl>
     <div class="stage"><img class="fit" data-hero src="media/printer-hero.webp" alt="CAD model of the printer: aluminum extrusion frame, CoreXY gantry, bed on three lead screws and an electronics bay"></div>
@@ -815,9 +886,7 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
     <p class="case-lead">A four-wheel-drive contest car that runs on one motor. It finished second among AUB mechanical engineering teams.</p>
     <dl class="meta">
       <div><dt>Result</dt><dd>2nd place</dd></div>
-      <div><dt>When</dt><dd>Fall 2026</dd></div>
       <div><dt>Role</dt><dd>Design and manufacturing lead, team of 4</dd></div>
-      <div><dt>Course</dt><dd>Manufacturing Processes I lab, AUB</dd></div>
     </dl>
     <div class="stage"><img class="fit" data-hero src="media/car-front.webp" alt="The micro-car: plywood chassis, DC gear motor, battery under a steel strap and four off-road tires"></div>
 
@@ -855,8 +924,6 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
     <p class="case-lead">A six-wheel, skid-steer truck designed and manufactured to haul 2 kg, tip it onto a target, cross 15 cm gaps and climb a 45° ramp.</p>
     <dl class="meta">
       <div><dt>Status</dt><dd>Competition at the end of November 2026</dd></div>
-      <div><dt>When</dt><dd>Fall 2026</dd></div>
-      <div><dt>Course</dt><dd>Manufacturing Processes I, AUB</dd></div>
       <div><dt>Tools</dt><dd>Fusion 360</dd></div>
     </dl>
     <div class="stage" id="truck-stage">
@@ -960,105 +1027,37 @@ window.addEventListener("scroll", function(){
   lastY = y;
 }, {passive:true});
 
-/* ---------- the beam ---------- */
-var NS = "http://www.w3.org/2000/svg";
-var rig = $("#rig"), nameEl = $("#name"), svg = $("#beam"), letters = $$("#name span:not(.gap)");
-var Lmm = 600, EI = 200000 * (20*Math.pow(5,3)/12), EXAG = 3, SEG = 56;
-var W = 0, centers = [], segs = [], st = {t:.5, P:60, v:0, tT:.5, PT:60, auto:true, lastMove:0};
-function mk(n,a){ var e = document.createElementNS(NS,n); for(var k in a) e.setAttribute(k,a[k]); svg.appendChild(e); return e; }
-var ref, hang, head, plabel, pinL, rolR, groundL, groundR;
-function build(){
-  svg.innerHTML = "";
-  ref = mk("line",{stroke:"#D4D9E0","stroke-width":1.5,"stroke-dasharray":"5 6"});
-  groundL = mk("path",{fill:"none",stroke:"#10141C","stroke-width":1.5});
-  groundR = mk("path",{fill:"none",stroke:"#10141C","stroke-width":1.5});
-  pinL = mk("path",{fill:"#FFFFFF",stroke:"#10141C","stroke-width":1.5,"stroke-linejoin":"round"});
-  rolR = mk("circle",{r:9,fill:"#FFFFFF",stroke:"#10141C","stroke-width":1.5});
-  segs = []; for(var i=0;i<SEG;i++) segs.push(mk("line",{"stroke-width":7,"stroke-linecap":"round"}));
-  hang = mk("line",{stroke:"#10141C","stroke-width":1.5});
-  head = mk("path",{fill:"#10141C"});
-  plabel = mk("text",{"font-family":"Archivo, Arial, sans-serif","font-size":14,"font-weight":650,fill:"#10141C","text-anchor":"middle"});
-  plabel.style.fontVariantNumeric = "tabular-nums";
+/* ---------- bending test: curve drawn in step with the video ---------- */
+var CURVE = [[9e-05,0.22],[0.00022,0.22],[0.00035,0.22],[0.00048,0.22],[0.00062,0.22],[0.00075,0.22],[0.00088,0.22],[0.00101,0.22],[0.00115,0.22],[0.00128,0.22],[0.00141,0.22],[0.00154,0.22],[0.00167,0.22],[0.00181,0.22],[0.00194,0.22],[0.00207,0.22],[0.0022,0.22],[0.00233,0.22],[0.00247,0.22],[0.0026,0.22],[0.00273,0.22],[0.00286,0.22],[0.003,0.22],[0.00313,0.22],[0.00326,0.22],[0.00339,0.22],[0.00352,0.22],[0.00366,0.22],[0.00379,0.22],[0.00392,0.22],[0.00405,0.22],[0.00419,0.22],[0.00432,0.22],[0.00445,0.22],[0.00458,0.22],[0.00467,13.03],[0.0048,15.73],[0.00502,16.4],[0.0052,17.53],[0.00533,17.98],[0.00546,19.1],[0.00559,19.55],[0.00621,21.8],[0.00634,22.7],[0.00709,25.84],[0.00722,26.52],[0.0074,27.19],[0.00753,27.19],[0.00806,29.66],[0.00819,31.46],[0.00894,36.18],[0.00987,40.0],[0.00991,40.22],[0.01004,41.57],[0.01044,45.17],[0.01048,45.17],[0.01062,45.39],[0.01101,44.49],[0.01185,48.99],[0.01189,49.89],[0.01203,51.01],[0.01216,53.71],[0.01229,53.71],[0.01256,55.28],[0.01269,54.83],[0.01366,58.2],[0.01379,60.45],[0.01449,64.72],[0.01467,63.15],[0.0148,62.92],[0.01493,62.47],[0.01507,62.25],[0.0152,63.15],[0.01533,63.15],[0.01555,66.74],[0.01568,69.66],[0.01621,73.48],[0.01634,73.03],[0.0167,70.11],[0.01683,70.11],[0.01696,70.11],[0.0174,74.38],[0.01753,77.08],[0.0178,80.67],[0.01784,80.9],[0.01797,81.12],[0.01811,79.78],[0.01828,77.08],[0.01841,76.4],[0.01855,75.73],[0.01885,75.96],[0.01907,76.63],[0.01921,78.65],[0.01934,80.45],[0.01947,82.02],[0.01987,84.27],[0.02,84.27],[0.02013,83.15],[0.02035,82.92],[0.02048,83.15],[0.02062,83.37],[0.02075,83.37],[0.02088,83.6],[0.02119,85.84],[0.02216,88.31],[0.02229,88.54],[0.02242,87.87],[0.02256,88.09],[0.02269,88.09],[0.02282,88.09],[0.023,89.66],[0.02313,91.01],[0.02352,93.93],[0.02366,93.71],[0.02379,93.71],[0.02392,93.71],[0.02485,93.26],[0.02498,93.93],[0.02511,95.51],[0.02529,96.4],[0.02542,97.08],[0.02555,97.75],[0.02568,97.98],[0.02581,98.2],[0.02595,98.43],[0.02608,98.43],[0.02621,98.2],[0.02648,97.53],[0.02661,96.4],[0.02674,96.63],[0.02687,97.53],[0.02705,99.33],[0.02718,100.45],[0.02753,101.57],[0.02767,102.02],[0.02789,102.7],[0.02802,102.7],[0.02815,102.47],[0.02828,101.12],[0.02859,99.33],[0.02872,98.88],[0.02881,90.79],[0.02885,81.35],[0.0289,56.4],[0.02899,50.11],[0.02907,42.25],[0.02912,38.88],[0.02916,33.93],[0.02921,29.66],[0.02925,24.94],[0.02934,9.44],[0.02938,9.89],[0.02943,6.74],[0.02947,0.45],[0.02952,0.45],[0.02965,0.22],[0.02978,0.22],[0.02991,0.22],[0.03004,0.22],[0.03018,0.22],[0.03031,0.22],[0.03044,0.22],[0.03057,0.22],[0.0307,0.22],[0.03084,0.22],[0.03097,0.22],[0.0311,0.22],[0.03123,0.22],[0.03137,0.22],[0.0315,0.22],[0.03163,0.22],[0.03176,0.22],[0.03189,0.22],[0.03203,0.22],[0.03216,0.22],[0.03229,0.22],[0.03242,0.22],[0.03256,0.22],[0.03269,0.22],[0.03282,0.22],[0.03295,0.22],[0.03308,0.22],[0.03322,0.22],[0.03335,0.22],[0.03348,0.22],[0.03361,0.22],[0.03374,0.22],[0.03388,0.22],[0.03401,0.22],[0.03414,0.22],[0.03427,0.22],[0.03441,0.22],[0.03454,0.22],[0.03467,0.22],[0.0348,0.22],[0.03493,0.22],[0.03507,0.22],[0.0352,0.22],[0.03533,0.22],[0.03546,0.22],[0.03559,0.22],[0.03573,0.22],[0.03586,0.22],[0.03599,0.22],[0.03612,0.22],[0.03626,0.22],[0.03639,0.22],[0.03652,0.22],[0.03665,0.22],[0.03678,0.22],[0.03692,0.22],[0.03705,0.22],[0.03718,0.22],[0.03731,0.22],[0.03744,0.22],[0.03758,0.22],[0.03771,0.22],[0.03784,0.22],[0.03797,0.22],[0.03811,0.22],[0.03824,0.22],[0.03837,0.22],[0.0385,0.22],[0.03863,0.22],[0.03877,0.22],[0.0389,0.22],[0.03903,0.22],[0.03916,0.22],[0.0393,0.22],[0.03943,0.22],[0.03956,0.22],[0.03969,0.22],[0.03982,0.22],[0.03996,0.22],[0.04009,0.22],[0.04022,0.22],[0.04035,0.22],[0.04048,0.22],[0.04062,0.22],[0.04075,0.22],[0.04088,0.22],[0.04101,0.22],[0.04115,0.22],[0.04128,0.22],[0.04137,0.22]];
+var bendV = $("#pv-bend"), nowEl = $("#h-now"), plot = $("#h-plot");
+var TF = 9.4, XF = 0.0291, XMAX = 0.0415;
+var NS = "http://www.w3.org/2000/svg", PX = function(x){ return 34 + x/0.042*356; }, PY = function(y){ return 222 - y/110*206; };
+function mk(n,a,t){ var e = document.createElementNS(NS,n); for(var k in a) e.setAttribute(k,a[k]); if(t !== undefined) e.textContent = t; plot.appendChild(e); return e; }
+[0,20,40,60,80,100].forEach(function(v){ mk("line",{x1:PX(0),x2:PX(0.042),y1:PY(v),y2:PY(v),stroke:"#D4D9E0","stroke-width":v?0.75:1.25}); mk("text",{x:PX(0)-6,y:PY(v)+4,"text-anchor":"end"},String(v)); });
+[0,0.01,0.02,0.03,0.04].forEach(function(v){ mk("text",{x:PX(v),y:PY(0)+16,"text-anchor":"middle"},(v*100).toFixed(0)+"%"); });
+mk("text",{x:PX(0.042),y:PY(0)+30,"text-anchor":"end"},"Strain");
+mk("text",{x:PX(0)-6,y:PY(110)+2,"text-anchor":"end"},"MPa");
+var clip = mk("clipPath",{id:"h-clip"}), clipR = document.createElementNS(NS,"rect"); clipR.setAttribute("y",0); clipR.setAttribute("height",250); clipR.setAttribute("x",0); clip.appendChild(clipR);
+mk("path",{d:"M"+CURVE.map(function(p){ return PX(p[0]).toFixed(1)+" "+PY(p[1]).toFixed(1); }).join("L"),fill:"none",stroke:"#1638D8","stroke-width":2.25,"stroke-linejoin":"round","clip-path":"url(#h-clip)"});
+var dot = mk("circle",{r:4.5,fill:"#1638D8",stroke:"#fff","stroke-width":2});
+function stressAt(x){ for(var i=1;i<CURVE.length;i++){ if(CURVE[i][0] >= x){ var a = CURVE[i-1], b = CURVE[i], k = (x-a[0])/((b[0]-a[0])||1); return a[1]+(b[1]-a[1])*k; } } return 0; }
+function drawPlot(t){
+  var D = bendV.duration || 11.47;
+  var x = t <= TF ? t/TF*XF : XF + (t-TF)/Math.max(.1,D-TF)*(XMAX-XF);
+  x = Math.max(0,Math.min(XMAX,x)); var y = stressAt(x);
+  clipR.setAttribute("width",PX(x)); dot.setAttribute("cx",PX(x)); dot.setAttribute("cy",PY(y));
+  nowEl.textContent = Math.round(y)+" MPa";
 }
-function measure(){
-  if(home.hidden) return;
-  W = svg.getBoundingClientRect().width;
-  if(!W) return;
-  nameEl.style.fontSize = "";
-  var all = $$("#name span"), tot = all.reduce(function(s,e){ return s + e.getBoundingClientRect().width; }, 0);
-  if(tot){ nameEl.style.fontSize = (parseFloat(getComputedStyle(nameEl).fontSize) * (W*0.93) / tot).toFixed(2) + "px"; }
-  var nb = nameEl.getBoundingClientRect();
-  centers = letters.map(function(s){ var r = s.getBoundingClientRect(); return (r.left + r.width/2 - nb.left) / nb.width; });
-  var y0 = 12;
-  ref.setAttribute("x1",0); ref.setAttribute("x2",W); ref.setAttribute("y1",y0); ref.setAttribute("y2",y0);
-  pinL.setAttribute("d","M0 "+(y0+5)+" l11 19 h-22 z");
-  groundL.setAttribute("d","M-18 "+(y0+25)+" h36");
-  rolR.setAttribute("cx",W); rolR.setAttribute("cy",y0+14);
-  groundR.setAttribute("d","M"+(W-18)+" "+(y0+24.5)+" h36");
-  draw();
-}
-function defl(xmm, amm, P){ // simply supported beam, point load P at a
-  var b = Lmm - amm;
-  if(xmm <= amm) return P*b*xmm*(Lmm*Lmm - b*b - xmm*xmm)/(6*Lmm*EI);
-  return P*amm*(Lmm-xmm)*(2*Lmm*xmm - xmm*xmm - amm*amm)/(6*Lmm*EI);
-}
-function ramp(r){ // steel grey -> cobalt -> hot
-  r = Math.max(0,Math.min(1,r));
-  var a = r < .5 ? [[154,163,174],[22,56,216]] : [[22,56,216],[229,57,27]], k = r < .5 ? r/.5 : (r-.5)/.5;
-  return "rgb("+a[0].map(function(c,i){return Math.round(c+(a[1][i]-c)*k)}).join(",")+")";
-}
-var roP = $("#ro-p"), roD = $("#ro-d"), roS = $("#ro-s");
-function draw(){
-  if(!W) return;
-  var s = W/Lmm, y0 = 12, a = st.t*Lmm, P = st.P, b = Lmm - a;
-  var px = function(xmm){ return defl(xmm,a,P)*s*EXAG; };
-  var Mmax = Math.abs(P)*a*b/Lmm, dmax = 0;
-  for(var i=0;i<SEG;i++){
-    var x1 = i/SEG*Lmm, x2 = (i+1)/SEG*Lmm, xm = (x1+x2)/2;
-    var M = xm <= a ? P*b*xm/Lmm : P*a*(Lmm-xm)/Lmm;
-    var l = segs[i];
-    l.setAttribute("x1",x1*s); l.setAttribute("x2",x2*s);
-    l.setAttribute("y1",y0+px(x1)); l.setAttribute("y2",y0+px(x2));
-    l.setAttribute("stroke", ramp(Math.abs(M)/18000));
-    var d = Math.abs(defl(xm,a,P)); if(d > dmax) dmax = d;
-  }
-  for(var j=0;j<letters.length;j++){
-    var xm2 = centers[j]*Lmm, y = px(xm2), sl = (px(xm2+3) - px(xm2-3))/(6*s);
-    letters[j].style.transform = "translate3d(0,"+y.toFixed(2)+"px,0) rotate("+(Math.atan(sl)*180/Math.PI).toFixed(3)+"deg)";
-  }
-  var ax = a*s, ay = y0 + px(a), len = 26 + Math.min(34, Math.abs(P)*.26);
-  hang.setAttribute("x1",ax); hang.setAttribute("x2",ax); hang.setAttribute("y1",ay+5); hang.setAttribute("y2",ay+len);
-  head.setAttribute("d","M"+ax+" "+(ay+len+9)+" l-6 -11 h12 z");
-  plabel.setAttribute("x",Math.max(34,Math.min(W-34,ax))); plabel.setAttribute("y",ay+len+28);
-  plabel.textContent = "P = "+Math.round(Math.abs(P))+" N";
-  roP.textContent = Math.round(Math.abs(P))+" N";
-  roD.textContent = dmax.toFixed(2)+" mm";
-  roS.textContent = Math.round(Mmax*2.5/(20*125/12))+" MPa";
-}
-var running = false, prev = 0, heroVisible = true;
-function tick(now){
-  if(!running) return;
-  var dt = Math.min(.05,(now - prev)/1000 || .016); prev = now;
-  if(st.auto){ st.tT = .5 + .34*Math.sin(now/2600); st.PT = 60 + 14*Math.sin(now/1700); }
-  st.t += (st.tT - st.t)*Math.min(1,dt*9);
-  var acc = 190*(st.PT - st.P) - 11*st.v; st.v += acc*dt; st.P += st.v*dt;
-  draw();
-  requestAnimationFrame(tick);
-}
-function startLoop(){ if(RM || running || home.hidden || !heroVisible) return; running = true; prev = performance.now(); requestAnimationFrame(tick); }
-function stopLoop(){ running = false; }
-function pointerT(e){ var r = svg.getBoundingClientRect(); return Math.max(.07,Math.min(.93,(e.clientX - r.left)/r.width)); }
-var hero = $("#hero"), pressed = false, idleTimer;
-hero.addEventListener("pointermove", function(e){ st.auto = false; st.tT = pointerT(e); if(!pressed) st.PT = 36; clearTimeout(idleTimer); idleTimer = setTimeout(function(){ if(!pressed) st.auto = true; }, 3200); if(RM){ st.t = st.tT; st.P = st.PT; draw(); } });
-rig.addEventListener("pointerdown", function(e){ pressed = true; st.auto = false; st.tT = pointerT(e); st.PT = 120; if(RM){ st.t = st.tT; st.P = 120; draw(); } });
-window.addEventListener("pointerup", function(){ if(!pressed) return; pressed = false; st.PT = 36; clearTimeout(idleTimer); idleTimer = setTimeout(function(){ st.auto = true; }, 2600); if(RM){ st.P = 36; draw(); } });
-hero.addEventListener("pointerleave", function(){ if(!pressed){ clearTimeout(idleTimer); idleTimer = setTimeout(function(){ st.auto = true; }, 900); } });
+var plotRaf;
+function plotLoop(){ drawPlot(bendV.currentTime); if(!bendV.paused) plotRaf = requestAnimationFrame(plotLoop); }
+bendV.addEventListener("play", function(){ cancelAnimationFrame(plotRaf); plotLoop(); });
+bendV.addEventListener("seeked", function(){ drawPlot(bendV.currentTime); });
+drawPlot(RM ? TF*0.985 : 0);
+function measure(){}
+function startLoop(){}
 if("IntersectionObserver" in window){
-  new IntersectionObserver(function(es){ heroVisible = es[0].isIntersecting; heroVisible ? startLoop() : stopLoop(); }).observe(hero);
+  new IntersectionObserver(function(es){ document.body.classList.toggle("at-hero", es[0].isIntersecting && !home.hidden); }).observe($("#name"));
 }
-build();
-window.addEventListener("resize", measure);
-if(document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
 
 /* ---------- videos play only while on screen ---------- */
 if("IntersectionObserver" in window){
