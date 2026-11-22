@@ -68,6 +68,9 @@ body.at-hero .brand{opacity:0;pointer-events:none}
 .nav{display:flex;gap:clamp(14px,2.4vw,34px)}
 .nav a{text-decoration:none;font-weight:600;font-size:1rem;color:rgba(255,255,255,.82);padding:6px 0;background:linear-gradient(#fff,#fff) left bottom/0 2px no-repeat;transition:background-size .3s,color .2s}
 .nav a:hover,.nav a[aria-current="true"]{background-size:100% 2px;color:#fff}
+.nav a{white-space:nowrap}
+@media (max-width:900px){.nav a .lg{display:none}}
+@media (max-width:700px){.nav a[href="#honor-society"]{display:none}}
 @media (max-width:560px){.nav a.opt{display:none}.nav{gap:13px}.nav a{font-size:.9rem}.brand{font-size:.95rem}}
 
 /* hero */
@@ -406,7 +409,8 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
     <nav class="nav" aria-label="Main">
       <a href="#work">Work</a>
       <a href="#experience" class="opt">Experience</a>
-      <a href="#about">About</a>
+      <a href="#honor-society" class="opt">Honor Society</a>
+      <a href="#about">Education<span class="lg"> and skills</span></a>
       <a href="#contact">Contact</a>
       <a href="Ghady_Sader_Resume.pdf" target="_blank" rel="noopener">Resume</a>
     </nav>
@@ -615,7 +619,7 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
           <p class="note num">April 2025 to present</p>
           <div><h3>AUB Honor Society</h3><p class="role">Founding president</p></div>
           <ul>
-            <li>Founded the society to unite 1,877 scholarship recipients, with a mission to recognize their talent and give them the resources, network and opportunities to excel.</li>
+            <li>Founded the society that now unites 1,877 scholarship recipients, with a mission to recognize their talent and give them the resources, network and opportunities to excel.</li>
             <li>Manage a $40K budget and launched a scholarship program funded by the society, with the Office of Financial Aid.</li>
             <li>Launched AUB's first student-led ambassador programs: 50 ambassadors attracting top high-school students in Lebanon and abroad.</li>
             <li>Created AUB's first society-run podcast.</li>
