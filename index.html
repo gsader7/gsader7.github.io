@@ -160,6 +160,11 @@ dl{margin:0}
 .plate-text{grid-column:span 5}
 .plate-media img.fit{position:absolute;inset:5%;width:90%;height:90%;object-fit:contain;mix-blend-mode:multiply}
 .plate-media img.fill,.plate-media video.fill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.plate-media.has-build img.fit{inset:14% 4% 2% 4%;width:92%;height:84%}
+.plate-media .build{position:absolute;top:4%;right:4%;width:40%;background:var(--paper);border-radius:6px;padding:5px 5px 0;box-shadow:0 18px 40px -14px rgba(16,20,28,.5);z-index:1}
+.plate-media .build img{display:block;width:100%;aspect-ratio:12/5;object-fit:cover;border-radius:3px}
+.plate-media .build span{display:block;font-size:.74rem;font-weight:600;color:var(--ink);padding:5px 3px 6px}
+@media (max-width:600px){.plate-media.has-build img.fit{inset:22% 10% 2% 0;width:90%;height:76%}.plate-media .build{width:42%;padding:4px 4px 0}.plate-media .build span{font-size:.68rem;padding:4px 2px 5px}}
 .plate-media .inset{position:absolute;right:4%;bottom:5%;width:23%;aspect-ratio:9/16;object-fit:cover;border-radius:5px;box-shadow:0 18px 40px -12px rgba(16,20,28,.55);border:2px solid var(--paper)}
 .plate-media.duo{display:grid;grid-template-columns:.62fr 1fr;gap:0}
 .plate-media.duo video{width:100%;height:100%;object-fit:cover}
@@ -529,7 +534,7 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
       </article>
 
       <article class="plate">
-        <a class="plate-media" href="#dump-truck" data-go="dump-truck" aria-label="Remote-controlled dump truck, open case study"><img class="fit" src="media/truck-dump.webp" alt="CAD model of the six-wheel dump truck with its bed tipped" loading="lazy"></a>
+        <a class="plate-media has-build" href="#dump-truck" data-go="dump-truck" aria-label="Remote-controlled dump truck, open case study"><img class="fit" src="media/truck-dump.webp" alt="CAD model of the six-wheel dump truck with its bed tipped" loading="lazy"><span class="build"><img src="media/truck-build-thumb.webp" alt="Photo of the truck being built: bed and cabinet on the chassis" loading="lazy"><span>The build so far</span></span></a>
         <div class="plate-text">
           <span class="tag open">Being built, results in December 2026</span>
           <h3><a href="#dump-truck">Six-wheel RC dump truck</a></h3>
@@ -963,6 +968,18 @@ dialog.zoom button{font:inherit;font-weight:620;color:#fff;background:transparen
           <li><b>Geared tipping bed.</b> A 35 kg·cm servo drives a 14-tooth pinion against a 42-tooth sector gear on the bed, tripling its torque. The bed pivots on a 6 mm pin in bronze bushings, and a limit switch reports when it is back down.</li>
           <li><b>Electronics.</b> An ESP32 controller with a radio receiver, two motor drivers, a fused 3S battery, an inertial sensor and four distance sensors, in a sealed cabinet.</li>
         </ul>
+      </div>
+    </section>
+
+    <section class="block">
+      <h3>Build so far</h3>
+      <div class="body">
+        <p>The chassis, the six drive motors and the tipping bed are assembled. Finishing the wiring, fitting the wheels and testing come next.</p>
+        <figure style="margin-top:26px"><button class="shot photo wide" data-zoom><img src="media/truck-build-side.webp" alt="The tipping bed and electronics cabinet mounted on the truck's chassis" loading="lazy"></button><figcaption class="note">Tipping bed and electronics cabinet mounted on the chassis</figcaption></figure>
+        <div class="grid2">
+          <figure><button class="shot photo" data-zoom><img style="aspect-ratio:2/1" src="media/truck-build-chassis.webp" alt="Top view of the chassis with six gear motors, two motor drivers and the tipping gear" loading="lazy"></button><figcaption class="note">Chassis from above: six gear motors, two motor drivers and the tipping gear</figcaption></figure>
+          <figure><button class="shot photo" data-zoom><img style="aspect-ratio:2/1" src="media/truck-build-bed.webp" alt="Top view of the bed seated on the chassis" loading="lazy"></button><figcaption class="note">Bed seated on the chassis, from above</figcaption></figure>
+        </div>
       </div>
     </section>
 
